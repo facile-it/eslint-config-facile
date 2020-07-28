@@ -1,0 +1,41 @@
+{
+    "name": "facile-coding-standard-ts",
+    "version": "0.0.1",
+    "description": "Facile.it ts coding standard ",
+    "main": "index.js",
+    "repository": "https://github.com/facile-it/facile-coding-standard-ts",
+    "author": "Iacopo <siuvdlec@gmail.com>",
+    "license": "MIT",
+    "files": [
+        "index.js",
+        "react.js",
+        "node.js"
+    ],
+    "scripts": {
+        "pretest": "npm run build",
+        "test": "eslint ./test/. -c ./test/_config.js --ext .ts",
+        "prebuild": "rm -f ./index.js ./react.js ./node.js",
+        "build": "tsc",
+        "prepublish": "yarn build"
+    },
+    "peerDependencies": {
+        "eslint": "^7.0",
+        "typescript": "^3.8"
+    },
+    "dependencies": {
+        "@typescript-eslint/eslint-plugin": "^3.7.1",
+        "@typescript-eslint/parser": "^3.7.1",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "eslint-plugin-react": "^7.20.4",
+        "eslint-plugin-react-hooks": "^4.0.8"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.14",
+        "eslint": "^7.5.0",
+        "prettier": "^2.0.5",
+        "typescript": "^3.9.7"
+    }
+}
