@@ -1,9 +1,9 @@
 {
-    "name": "facile-coding-standard-ts",
+    "name": "eslint-config-facile",
     "version": "0.1.0",
-    "description": "Facile.it ts coding standard ",
+    "description": "facile.it ESLint extensible configuration",
     "main": "index.js",
-    "repository": "https://github.com/facile-it/facile-coding-standard-ts",
+    "repository": "https://github.com/facile-it/eslint-config-facile",
     "author": "Iacopo <siuvdlec@gmail.com>",
     "license": "MIT",
     "files": [
@@ -20,7 +20,8 @@
     },
     "peerDependencies": {
         "eslint": "^7.0",
-        "typescript": "^3.8"
+        "typescript": "^3.7",
+        "prettier": "^2.0"
     },
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "^3.7.1",

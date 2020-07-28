@@ -10,14 +10,14 @@ facile.it ESLint extensible configuration
 yarn add eslint-config-facile
 ```
 
-**Note** `eslint` and `typescript` are a peer dependencies
+**Note** `eslint`, `prettier`, `typescript` are a peer dependencies
 
 ---
 
 ### TypeScript
 
 ```javascript
-// in your .eslinrc.js or package.json
+// in your .eslintrc.json
 
 {
   "extends": "facile"
@@ -29,7 +29,7 @@ yarn add eslint-config-facile
 ### React
 
 ```javascript
-// in your .eslinrc.js or package.json
+// in your .eslintrc.json
 
 {
   "extends": "facile/react"
@@ -41,7 +41,7 @@ yarn add eslint-config-facile
 ### Node
 
 ```javascript
-// in your .eslinrc.js or package.json
+// in your .eslintrc.json
 
 {
   "extends": "facile/node"
