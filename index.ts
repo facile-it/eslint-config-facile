@@ -58,6 +58,7 @@ export = {
         '@typescript-eslint/no-namespace': 'warn',
         '@typescript-eslint/consistent-type-definitions': 'error',
         '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off', // https://github.com/typescript-eslint/typescript-eslint/issues/1071,
         '@typescript-eslint/unified-signatures': 'error',
         '@typescript-eslint/no-unused-vars': [
