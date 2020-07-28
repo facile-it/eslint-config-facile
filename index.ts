@@ -55,7 +55,7 @@ export = {
         'prefer-template': 'error',
         'wrap-iife': ['error', 'inside'],
 
-        '@typescript-eslint/no-namespace': 'off',
+        '@typescript-eslint/no-namespace': 'warn',
         '@typescript-eslint/consistent-type-definitions': 'error',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-explicit-any': 'off', // https://github.com/typescript-eslint/typescript-eslint/issues/1071,
