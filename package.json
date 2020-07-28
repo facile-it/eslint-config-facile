@@ -1,6 +1,6 @@
 {
     "name": "eslint-config-facile",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "facile.it ESLint extensible configuration",
     "main": "index.js",
     "repository": "https://github.com/facile-it/eslint-config-facile",
@@ -20,8 +20,8 @@
     },
     "peerDependencies": {
         "eslint": "^7.0",
-        "typescript": "^3.7",
-        "prettier": "^2.0"
+        "prettier": "^2.0",
+        "typescript": "^3.7"
     },
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "^3.7.1",
