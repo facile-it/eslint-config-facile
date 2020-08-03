@@ -62,13 +62,11 @@ export = {
         '@typescript-eslint/no-explicit-any': 'off', // https://github.com/typescript-eslint/typescript-eslint/issues/1071,
         '@typescript-eslint/unified-signatures': 'error',
         '@typescript-eslint/no-unused-vars': [
-            'error',
+            'warn',
             {
                 argsIgnorePattern: '^_',
             },
         ],
-
-        'react/prop-types': 'off',
 
         'prettier/prettier': 'error',
 
