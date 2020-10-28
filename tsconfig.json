@@ -13,7 +13,9 @@
         "pretty": true,
         "removeComments": true,
         "sourceMap": false,
-        "declaration": false
+        "declaration": false,
+        "importsNotUsedAsValues": "error",
+        "importHelpers": true
     },
     "files": ["index.ts", "react.ts", "node.ts"]
 }
