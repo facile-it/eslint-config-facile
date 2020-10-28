@@ -16,11 +16,14 @@ yarn add eslint-config-facile
 
 ### TypeScript
 
-```javascript
+```json
 // in your .eslintrc.json
 
 {
-  "extends": "facile"
+  "extends": "facile",
+  "parserOptions": {
+      "project": "./tsconfig.json"
+  }
 }
 ```
 
@@ -28,11 +31,14 @@ yarn add eslint-config-facile
 
 ### React
 
-```javascript
+```json
 // in your .eslintrc.json
 
 {
-  "extends": "facile/react"
+  "extends": "facile/react",
+  "parserOptions": {
+      "project": "./tsconfig.json"
+  }
 }
 ```
 
@@ -40,10 +46,13 @@ yarn add eslint-config-facile
 
 ### Node
 
-```javascript
+```json
 // in your .eslintrc.json
 
 {
   "extends": "facile/node"
+  "parserOptions": {
+      "project": "./tsconfig.json"
+  }
 }
 ```
