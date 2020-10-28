@@ -50,7 +50,7 @@ yarn add eslint-config-facile
 // in your .eslintrc.json
 
 {
-  "extends": "facile/node"
+  "extends": "facile/node",
   "parserOptions": {
       "project": "./tsconfig.json"
   }
