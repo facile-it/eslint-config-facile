@@ -97,5 +97,7 @@ export = {
                 },
             },
         ],
+
+        'fp-ts/no-module-imports': 'off',
     },
 }
