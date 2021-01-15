@@ -6,13 +6,14 @@ export = {
         project: join(__dirname, './tsconfig.json'),
         sourceType: 'module',
     },
-    plugins: ['import'],
+    plugins: ['import', 'fp-ts'],
     extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
         'prettier/@typescript-eslint',
         'plugin:prettier/recommended',
         'plugin:rxjs/recommended',
+        'plugin:fp-ts/all',
     ],
     rules: {
         complexity: 'off',
