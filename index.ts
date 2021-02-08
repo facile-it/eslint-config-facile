@@ -62,6 +62,8 @@ export = {
         'prefer-rest-params': 'error',
         'prefer-template': 'error',
         'wrap-iife': ['error', 'inside'],
+        
+        'react/display-name': 'off',
 
         '@typescript-eslint/no-namespace': 'warn',
         '@typescript-eslint/consistent-type-definitions': 'error',
