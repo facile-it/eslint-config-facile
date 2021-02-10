@@ -7,7 +7,7 @@ facile.it ESLint extensible configuration
 ### Installation
 
 ```sh
-yarn add eslint-config-facile
+yarn add -D eslint-config-facile eslint prettier
 ```
 
 **Note** `eslint`, `prettier`, `typescript` are a peer dependencies
