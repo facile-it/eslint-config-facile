@@ -38,12 +38,7 @@ export = {
         'no-new-wrappers': 'error',
         'no-param-reassign': 'error',
         'no-redeclare': 'off',
-        'no-shadow': [
-            'error',
-            {
-                hoist: 'all',
-            },
-        ],
+        'no-shadow': 'off',
         'no-undef-init': 'error',
         'no-unused-vars': 'off',
         'no-useless-call': 'error',
@@ -75,6 +70,9 @@ export = {
             {
                 argsIgnorePattern: '^_',
             },
+        ],
+        "@typescript-eslint/no-shadow": [
+            "error", { "hoist": "all", "ignoreTypeValueShadow": true }
         ],
 
         'prettier/prettier': 'error',
