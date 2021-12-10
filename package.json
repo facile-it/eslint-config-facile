@@ -9,36 +9,50 @@
     "files": [
         "index.js",
         "react.js",
-        "node.js"
+        "node.js",
+        "prettierrc.json"
     ],
     "scripts": {
+        "prebuild": "rm -f ./index.js ./react.js ./node.js ./prettierrc.json",
+        "build": "tsc && cp .prettierrc.json prettierrc.json",
         "pretest": "npm run build",
         "test": "eslint ./test/. -c ./test/_config.js --ext .ts",
-        "prebuild": "rm -f ./index.js ./react.js ./node.js",
-        "build": "tsc",
-        "prepublish": "yarn build"
+        "prepublish": "npm run build"
     },
     "peerDependencies": {
-        "eslint": "^7.0",
-        "prettier": "^2.0",
+        "eslint": "^7.0.0 || ^8.0.0",
+        "prettier": "^2.5",
         "typescript": "^3.7 || ^4.0"
     },
     "dependencies": {
-        "@typescript-eslint/eslint-plugin": "^4.22.0",
-        "@typescript-eslint/parser": "^4.22.0",
-        "eslint-config-prettier": "^8.2.0",
-        "eslint-plugin-fp-ts": "^0.2.1",
-        "eslint-plugin-import": "^2.22.1",
+        "@typescript-eslint/eslint-plugin": "^5.6.0",
+        "@typescript-eslint/parser": "^5.6.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-fp-ts": "^0.3.0",
+        "eslint-plugin-import": "^2.25.3",
         "eslint-plugin-node": "^11.1.0",
-        "eslint-plugin-prettier": "^3.4.0",
-        "eslint-plugin-react": "^7.23.2",
-        "eslint-plugin-react-hooks": "^4.2.0",
-        "eslint-plugin-rxjs": "^3.1.5"
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "^7.27.1",
+        "eslint-plugin-react-hooks": "^4.3.0",
+        "eslint-plugin-rxjs": "^4.0.3"
     },
     "devDependencies": {
-        "@types/node": "^14.0.14",
-        "eslint": "^7.24.0",
-        "prettier": "^2.2.1",
-        "typescript": "^4.2.4"
-    }
+        "@types/node": "^16.11.12",
+        "eslint": "^8.4.1",
+        "prettier": "^2.5.1",
+        "typescript": "^4.5.3"
+    },
+    "tags": [
+        "eslint",
+        "prettier",
+        "configuration"
+    ],
+    "keywords": [
+        "typescript",
+        "react",
+        "eslint",
+        "prettier",
+        "extensible",
+        "configuration"
+    ]
 }
