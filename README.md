@@ -2,8 +2,6 @@
 
 facile.it ESLint & Prettier extensible configuration
 
----
-
 ## Installation
 
 ```sh
@@ -11,8 +9,6 @@ npm install -D eslint-config-facile eslint prettier
 ```
 
 **Note** `eslint`, `prettier`, `typescript` are a peer dependencies
-
----
 
 ## Config
 
@@ -22,7 +18,7 @@ npm install -D eslint-config-facile eslint prettier
 
 ##### Simple use
 
-_ in your package.json_
+_in your package.json_
 
 ```json
 "eslintConfig": {
@@ -35,7 +31,7 @@ _ in your package.json_
 
 ##### Extend
 
-_.eslintrc.json_
+_create .eslintrc.json_
 
 ```json
 {
@@ -50,7 +46,7 @@ _.eslintrc.json_
 
 ##### Simple use
 
-_ in your package.json_
+_in your package.json_
 
 ```json
 "eslintConfig": {
@@ -63,7 +59,7 @@ _ in your package.json_
 
 ##### Extend
 
-_.eslintrc.json_
+_create .eslintrc.json_
 
 ```json
 {
@@ -78,7 +74,7 @@ _.eslintrc.json_
 
 ##### Simple use
 
-_ in your package.json_
+_in your package.json_
 
 ```json
 "prettier": "eslint-config-facile/prettierrc.json",
@@ -86,7 +82,7 @@ _ in your package.json_
 
 ##### Extend
 
-_.prettierrc.js_
+_create .prettierrc.js_
 
 ```js
 module.exports = {
