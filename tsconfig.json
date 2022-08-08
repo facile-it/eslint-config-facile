@@ -17,5 +17,5 @@
         "importsNotUsedAsValues": "error",
         "importHelpers": true
     },
-    "files": ["index.ts", "react.ts", "node.ts"]
+    "files": ["index.ts", "react.ts", "node.ts", "next.ts"]
 }

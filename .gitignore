@@ -3,5 +3,6 @@ dist
 
 index.js
 react.js
+next.js
 node.js
 prettierrc.json

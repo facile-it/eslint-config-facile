@@ -12,43 +12,15 @@ npm install -D eslint-config-facile eslint prettier
 
 ## Prettier config
 
-#### Simple use
-
-_in your package.json_
-
-```json
-"prettier": "eslint-config-facile/prettierrc.json",
-```
-
-#### Extend
-
 _create .prettierrc.js_
 
 ```js
-module.exports = {
-    ...require('eslint-config-facile/prettierrc.json'),
-    // custom config
-}
+module.exports = require('eslint-config-facile/prettierrc.json')
 ```
 
 ## ESLint config
 
 ### React
-
-#### Simple use
-
-_in your package.json_
-
-```json
-"eslintConfig": {
-    "extends": "facile/react",
-    "parserOptions": {
-        "project": "./tsconfig.json"
-    }
-}
-```
-
-#### Extend
 
 _create .eslintrc.json_
 
@@ -61,22 +33,20 @@ _create .eslintrc.json_
 }
 ```
 
-### Node
+### Next
 
-#### Simple use
-
-_in your package.json_
+_create .eslintrc.json_
 
 ```json
-"eslintConfig": {
-    "extends": "facile/node",
+{
+    "extends": "facile/next",
     "parserOptions": {
         "project": "./tsconfig.json"
     }
 }
 ```
 
-#### Extend
+### Node
 
 _create .eslintrc.json_
 
