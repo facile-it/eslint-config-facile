@@ -19,7 +19,7 @@ export = {
         complexity: 'off',
         curly: 'error',
         'default-case': 'off',
-        'dot-notation': 'error',
+        'dot-notation': 'off',
         eqeqeq: 'error',
         'guard-for-in': 'error',
         'id-match': 'error',
@@ -58,6 +58,7 @@ export = {
         'prefer-template': 'error',
         'wrap-iife': ['error', 'inside'],
 
+        '@typescript-eslint/dot-notation': 'error',
         '@typescript-eslint/no-namespace': 'warn',
         '@typescript-eslint/consistent-type-definitions': 'error',
         '@typescript-eslint/no-empty-interface': 'off',
