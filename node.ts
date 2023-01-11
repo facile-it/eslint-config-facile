@@ -1,6 +1,6 @@
 export = {
     plugins: ['node'],
-    extends: ['./index.js', 'plugin:node/recommended'],
+    extends: ['plugin:node/recommended', './index.js'],
     parserOptions: {
         sourceType: 'module',
     },
