@@ -3,6 +3,5 @@ export = {
     rules: {
         'react/prop-types': 'off',
         'react/display-name': 'off',
-        'react/jsx-curly-brace-presence': 'error',
     },
 }
