@@ -6,7 +6,8 @@ export = {
     },
     rules: {
         'node/no-unsupported-features/es-syntax': ['error', { ignores: ['modules'] }],
-        'node/no-missing-import': ['error', { tryExtensions: ['.ts', '.tsx', '.js', '.jsx', '.json'] }],
+        'node/no-missing-import': 'off',
+        'import/no-unresolved': 'error',
     },
     env: {
         node: true,
