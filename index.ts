@@ -13,7 +13,16 @@ export = {
         'plugin:prettier/recommended',
         'plugin:rxjs/recommended',
         'plugin:fp-ts/all',
+        'plugin:import/typescript'
     ],
+    settings: {
+        'import/resolver': {
+            typescript: true,
+            node: {
+                extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+            },
+        },
+    },
     rules: {
         complexity: 'off',
         curly: 'error',
@@ -77,7 +86,7 @@ export = {
 
         'prettier/prettier': 'error',
 
-        'import/no-deprecated': 'error',
+        'import/no-deprecated': 'off', // https://github.com/import-js/eslint-plugin-import/issues/1532
         'import/no-unresolved': 'off',
         'import/export': 'off',
         'import/order': [
