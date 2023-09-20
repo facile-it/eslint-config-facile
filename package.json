@@ -1,6 +1,6 @@
 {
     "name": "eslint-config-facile",
-    "version": "0.10.0-rc.0",
+    "version": "0.10.0-rc.1",
     "description": "facile.it ESLint extensible configuration",
     "main": "index.js",
     "repository": "https://github.com/facile-it/eslint-config-facile",
