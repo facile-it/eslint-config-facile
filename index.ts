@@ -13,7 +13,7 @@ export = {
         'plugin:prettier/recommended',
         'plugin:rxjs/recommended',
         'plugin:fp-ts/all',
-        'plugin:import/typescript'
+        'plugin:import/typescript',
     ],
     settings: {
         'import/resolver': {
@@ -74,15 +74,14 @@ export = {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off', // https://github.com/typescript-eslint/typescript-eslint/issues/1071,
         '@typescript-eslint/unified-signatures': 'error',
+        '@typescript-eslint/consistent-type-imports': 'error',
         '@typescript-eslint/no-unused-vars': [
             'warn',
             {
                 argsIgnorePattern: '^_',
             },
         ],
-        "@typescript-eslint/no-shadow": [
-            "error", { "hoist": "all", "ignoreTypeValueShadow": true }
-        ],
+        '@typescript-eslint/no-shadow': ['error', { hoist: 'all', ignoreTypeValueShadow: true }],
 
         'prettier/prettier': 'error',
 
