@@ -18,7 +18,7 @@
         "build": "tsc && cp .prettierrc.json prettierrc.json",
         "pretest": "npm run build",
         "test": "eslint ./test/. -c ./test/_config.js --ext .ts",
-        "prepublish": "npm run build"
+        "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
         "eslint": "^7.0.0 || ^8.0.0",
