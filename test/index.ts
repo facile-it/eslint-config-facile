@@ -1,3 +1,5 @@
+import { h, e } from './mod'
+
 export function test(): string {
-    return 'hello'
+    return `${h}${e}llo`
 }

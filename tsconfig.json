@@ -1,20 +1,8 @@
 {
+    "extends": "@facile-it/tsconfig/tsconfig.json",
     "compilerOptions": {
         "target": "ES2015",
-        "module": "commonjs",
-        "lib": ["esnext"],
-        "strict": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "pretty": true,
-        "removeComments": true,
-        "sourceMap": false,
-        "declaration": false,
-        "importHelpers": true
+        "module": "commonjs"
     },
     "files": ["index.ts", "react.ts", "node.ts", "next.ts"]
 }

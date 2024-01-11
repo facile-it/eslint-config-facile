@@ -1,6 +1,6 @@
 const { join } = require("path");
 module.exports = {
-    extends: ['../index.js'],
+    extends: ['../dist/index.js'],
     parserOptions: {
         project: join(__dirname, "./tsconfig.json"),
     },

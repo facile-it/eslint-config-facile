@@ -2,20 +2,24 @@
     "name": "eslint-config-facile",
     "version": "0.11.0",
     "description": "facile.it ESLint extensible configuration",
-    "main": "index.js",
     "repository": "https://github.com/facile-it/eslint-config-facile",
     "author": "Iacopo <siuvdlec@gmail.com>",
     "license": "MIT",
     "files": [
-        "index.js",
-        "react.js",
-        "node.js",
-        "next.js",
-        "prettierrc.json"
+        "/dist"
     ],
+    "main": "./dist/index.js",
+    "exports": {
+        "package.json": "./package.json",
+        "react": "./dist/react.js",
+        "node": "./dist/node.js",
+        "next": "./dist/next.js",
+        "prettierrc.json": "./prettierrc.json"
+    },
     "scripts": {
-        "prebuild": "rm -f ./index.js ./react.js ./node.js ./prettierrc.json",
-        "build": "tsc && cp .prettierrc.json prettierrc.json",
+        "tsc": "tsc",
+        "prebuild": "rm -rf dist",
+        "build": "tsc -p tsconfig.build.json && cp .prettierrc.json ./dist/prettierrc.json",
         "pretest": "npm run build",
         "test": "eslint ./test/. -c ./test/_config.js --ext .ts",
         "prepublishOnly": "npm run build"
@@ -40,6 +44,7 @@
         "eslint-plugin-rxjs": "^5.0.3"
     },
     "devDependencies": {
+        "@facile-it/tsconfig": "^0.2.0",
         "@types/node": "^20.8.8",
         "eslint": "^8.52.0",
         "prettier": "^3.0.3",
