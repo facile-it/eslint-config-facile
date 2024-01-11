@@ -85,6 +85,7 @@ export = {
 
         'prettier/prettier': 'error',
 
+        'import/no-duplicates': ['error', { 'prefer-inline': false }],
         'import/no-deprecated': 'off', // https://github.com/import-js/eslint-plugin-import/issues/1532
         'import/no-unresolved': 'off',
         'import/export': 'off',
