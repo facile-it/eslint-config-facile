@@ -11,9 +11,7 @@
     "main": "./dist/index.js",
     "exports": {
         "./package.json": "./package.json",
-        ".": {
-            "require": "./dist/index.js"
-        },
+        ".": "./dist/index.js",
         "./react": "./dist/react.js",
         "./node": "./dist/node.js",
         "./next": "./dist/next.js",
