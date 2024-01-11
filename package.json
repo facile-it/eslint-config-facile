@@ -10,11 +10,14 @@
     ],
     "main": "./dist/index.js",
     "exports": {
-        "package.json": "./package.json",
-        "react": "./dist/react.js",
-        "node": "./dist/node.js",
-        "next": "./dist/next.js",
-        "prettierrc.json": "./prettierrc.json"
+        "./package.json": "./package.json",
+        ".": {
+            "require": "./dist/index.js"
+        },
+        "./react": "./dist/react.js",
+        "./node": "./dist/node.js",
+        "./next": "./dist/next.js",
+        "./prettierrc.json": "./dist/prettierrc.json"
     },
     "scripts": {
         "tsc": "tsc",
