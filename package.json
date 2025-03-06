@@ -2,7 +2,10 @@
     "name": "eslint-config-facile",
     "version": "1.0.0-rc.0",
     "description": "facile.it ESLint extensible configuration",
-    "repository": "https://github.com/facile-it/eslint-config-facile",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/facile-it/eslint-config-facile.git"
+    },
     "author": "Iacopo <siuvdlec@gmail.com>",
     "license": "MIT",
     "files": [
