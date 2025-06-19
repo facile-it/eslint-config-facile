@@ -24,9 +24,6 @@ export default tseslint.config(
         'plugin:node/recommended',
     )),
     {
-        plugins: {
-            node,
-        },
         languageOptions: {
             globals: {
                 ...globals.node,
