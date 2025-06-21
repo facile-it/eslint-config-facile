@@ -2,39 +2,39 @@
 import { FlatCompat } from "@eslint/eslintrc"
 import { fixupConfigRules, fixupPluginRules } from "@eslint/compat"
 import tsParser from '@typescript-eslint/parser'
-import js from "@eslint/js";
+import eslint from "@eslint/js";
 // @ts-ignore
-import _import from "eslint-plugin-import";
+import importPlugin from "eslint-plugin-import";
 // @ts-ignore
 import fpTs from "eslint-plugin-fp-ts";
 import rxjs from "@smarttools/eslint-plugin-rxjs"
 import path from 'node:path'
 import { fileURLToPath } from "node:url";
 import tseslint from 'typescript-eslint';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const compat = new FlatCompat({
     baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+    recommendedConfig: eslint.configs.recommended,
+    allConfig: eslint.configs.all
 })
 
 export default tseslint.config(
+    eslint.configs.recommended,
+    tseslint.configs.recommended,
+    importPlugin.flatConfigs.recommended,
+    importPlugin.flatConfigs.typescript,
+    eslintPluginPrettierRecommended,
     ...fixupConfigRules(compat.extends(
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier",
-        "plugin:prettier/recommended",
         "plugin:fp-ts/all",
-        "plugin:import/typescript",
     )),
     // @ts-ignore
     rxjs.configs.recommended,
     {
         plugins: {
-            import: fixupPluginRules(_import),
             "fp-ts": fixupPluginRules(fpTs),
             rxjs,
         },
@@ -53,7 +53,7 @@ export default tseslint.config(
                 typescript: true,
 
                 node: {
-                    extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
+                    extensions: [".ts", ".tsx", ".js", ".mjs", ".jsx", ".json"],
                 },
             },
         },
