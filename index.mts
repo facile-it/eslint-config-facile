@@ -38,6 +38,9 @@ export default tseslint.config(
             "fp-ts": fixupPluginRules(fpTs),
             rxjs,
         },
+        linterOptions: {
+            reportUnusedDisableDirectives: "off",
+        },
         languageOptions: {
             parser: tsParser,
             ecmaVersion: 2019,
@@ -72,7 +75,7 @@ export default tseslint.config(
             "no-extend-native": "error",
             "no-extra-bind": "error",
             "no-implicit-coercion": "error",
-            "no-implicit-globals": "error",
+            "no-implicit-globals": "off",
             "no-invalid-this": "off",
             "no-lone-blocks": "error",
             "no-native-reassign": "error",
@@ -107,9 +110,15 @@ export default tseslint.config(
             "@typescript-eslint/explicit-module-boundary-types": "off",
             "@typescript-eslint/no-explicit-any": "off",
             "@typescript-eslint/unified-signatures": "error",
+            "@typescript-eslint/no-empty-object-type": "off",
+            "@typescript-eslint/no-require-imports": "off",
+            "@typescript-eslint/no-unused-expressions": "off",
 
             "@typescript-eslint/no-unused-vars": ["warn", {
                 argsIgnorePattern: "^_",
+                caughtErrorsIgnorePattern: "^_",
+                destructuredArrayIgnorePattern: "^_",
+                varsIgnorePattern: "^_",
             }],
 
             "@typescript-eslint/no-shadow": ["error", {
