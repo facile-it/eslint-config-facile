@@ -8,17 +8,15 @@ const __dirname = path.dirname(__filename);
 
 export default [
     {
-        ignores: [
-            "**/*.mjs",
-        ]
+        ignores: ['**/*.mjs'],
     },
     ...base,
     {
         languageOptions: {
             parserOptions: {
                 tsconfigRootDir: __dirname,
-                project: join(__dirname, "./tsconfig.json"),
+                project: './tsconfig.json',
             },
         },
-    }
+    },
 ]
