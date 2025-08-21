@@ -1,13 +1,13 @@
-import globals from "globals";
+import globals from 'globals'
 import base from './index.mjs'
-import tseslint from 'typescript-eslint';
+import tseslint from 'typescript-eslint'
 import reactPlugin from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks';
+import reactHooks from 'eslint-plugin-react-hooks'
 
 export default tseslint.config(
-    ...base,
+    base,
     { ...reactPlugin.configs.flat.recommended },
-    reactHooks.configs["recommended-latest"],
+    reactHooks.configs['recommended-latest'],
     {
         languageOptions: {
             globals: {
@@ -17,16 +17,16 @@ export default tseslint.config(
 
         settings: {
             react: {
-                version: "detect",
+                version: 'detect',
             },
         },
 
         rules: {
-            "react/prop-types": "off",
-            "react/display-name": "off",
-            "react/jsx-uses-react": "off",
-            "react/react-in-jsx-scope": "off",
-            "react/jsx-curly-brace-presence": "error",
+            'react/prop-types': 'off',
+            'react/display-name': 'off',
+            'react/jsx-uses-react': 'off',
+            'react/react-in-jsx-scope': 'off',
+            'react/jsx-curly-brace-presence': 'error',
         },
     }
 )

@@ -27,10 +27,10 @@ _create eslint.config.mjs_
 ```ts
 import react from 'eslint-config-facile/react'
 import path from 'node:path'
-import { fileURLToPath } from "node:url";
+import { fileURLToPath } from 'node:url'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export default [
     ...react,
@@ -40,7 +40,7 @@ export default [
                 tsconfigRootDir: __dirname,
             },
         },
-    }
+    },
 ]
 ```
 
@@ -51,10 +51,10 @@ _create eslint.config.mjs_
 ```ts
 import next from 'eslint-config-facile/next'
 import path from 'node:path'
-import { fileURLToPath } from "node:url";
+import { fileURLToPath } from 'node:url'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export default [
     ...next,
@@ -64,7 +64,7 @@ export default [
                 tsconfigRootDir: __dirname,
             },
         },
-    }
+    },
 ]
 ```
 
@@ -75,10 +75,10 @@ _create eslint.config.mjs_
 ```ts
 import node from 'eslint-config-facile/node'
 import path from 'node:path'
-import { fileURLToPath } from "node:url";
+import { fileURLToPath } from 'node:url'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export default [
     ...node,
@@ -88,6 +88,6 @@ export default [
                 tsconfigRootDir: __dirname,
             },
         },
-    }
+    },
 ]
 ```
