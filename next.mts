@@ -14,13 +14,13 @@ const compat = new FlatCompat({
     allConfig: js.configs.all,
 })
 
-export default tseslint.config(
+export default tseslint.config([
     ...compat.config({
-        extends: ['next/core-web-vitals'],
+        extends: ['next/core-web-vitals', 'next/typescript'],
         rules: {
             'react/prop-types': 'off',
             'react/display-name': 'off',
         },
     }),
-    facileBase
-)
+    facileBase,
+])
