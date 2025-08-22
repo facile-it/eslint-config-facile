@@ -1,5 +1,4 @@
 import base from '../dist/index.mjs'
-import { join } from "path";
 import path from 'node:path'
 import { fileURLToPath } from "node:url";
 

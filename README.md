@@ -31,7 +31,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
 
 export default defineConfig([
     react,
@@ -56,7 +56,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
 
 export default defineConfig([
     next,
@@ -81,7 +81,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
 
 export default defineConfig([
     node,
