@@ -52,7 +52,7 @@ export const facileBase = tseslint.config(
                 typescript: true,
 
                 node: {
-                    extensions: ['.ts', '.tsx', '.js', '.mjs', '.jsx', '.json'],
+                    extensions: ['.js', '.ts', '.mjs', '.mts', '.jsx', '.tsx', '.json'],
                 },
             },
         },
@@ -155,14 +155,12 @@ export const facileBase = tseslint.config(
                 },
             ],
 
+            'import/no-duplicates': 'off',
+            'no-duplicate-imports': ['error', { allowSeparateTypeImports: true }],
+
             'fp-ts/no-module-imports': 'off',
         },
     }
 )
 
-
-export default tseslint.config(
-    importPlugin.flatConfigs.recommended,
-    importPlugin.flatConfigs.typescript,
-    facileBase
-)
+export default tseslint.config(importPlugin.flatConfigs.recommended, importPlugin.flatConfigs.typescript, facileBase)
