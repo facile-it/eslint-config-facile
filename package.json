@@ -1,54 +1,68 @@
 {
     "name": "eslint-config-facile",
-    "version": "0.12.0",
+    "version": "1.0.0-rc.7",
     "description": "facile.it ESLint extensible configuration",
-    "repository": "https://github.com/facile-it/eslint-config-facile",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/facile-it/eslint-config-facile.git"
+    },
     "author": "Iacopo <siuvdlec@gmail.com>",
     "license": "MIT",
     "files": [
         "/dist"
     ],
-    "main": "./dist/index.js",
+    "type": "module",
+    "module": "./dist/index.mjs",
     "exports": {
         "./package.json": "./package.json",
-        ".": "./dist/index.js",
-        "./react": "./dist/react.js",
-        "./node": "./dist/node.js",
-        "./next": "./dist/next.js",
-        "./prettierrc.json": "./dist/prettierrc.json"
+        "./prettierrc.json": "./dist/prettierrc.json",
+        ".": {
+            "types": "./dist/index.d.mts",
+            "default": "./dist/index.mjs"
+        },
+        "./*": {
+            "types": "./dist/*.d.mts",
+            "default": "./dist/*.mjs"
+        }
     },
+    "types": "./dist/types/index.d.mts",
     "scripts": {
         "tsc": "tsc",
         "prebuild": "rm -rf dist",
         "build": "tsc -p tsconfig.build.json && cp .prettierrc.json ./dist/prettierrc.json",
         "pretest": "npm run build",
-        "test": "eslint ./test/. -c ./test/_config.js --ext .ts",
+        "test": "eslint ./test/. -c ./test/_config.mjs --ext .ts",
         "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
-        "eslint": "^7.0.0 || ^8.0.0",
-        "prettier": "^3.0.3",
+        "eslint": "^9.33.0",
+        "prettier": "^3.6.0",
         "typescript": "^4.0 || ^5.0"
     },
     "dependencies": {
-        "@typescript-eslint/eslint-plugin": "^6.9.0",
-        "@typescript-eslint/parser": "^6.9.0",
-        "eslint-config-next": "^13.5.6",
-        "eslint-config-prettier": "^9.0.0",
-        "eslint-import-resolver-typescript": "^3.6.1",
-        "eslint-plugin-fp-ts": "^0.3.2",
-        "eslint-plugin-import": "^2.29.0",
-        "eslint-plugin-node": "^11.1.0",
-        "eslint-plugin-prettier": "^5.0.1",
-        "eslint-plugin-react": "^7.33.2",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "eslint-plugin-rxjs": "^5.0.3"
+        "@eslint/compat": "^1.3.2",
+        "@eslint/eslintrc": "^3.3.1",
+        "@eslint/js": "^9.33.0",
+        "@next/eslint-plugin-next": "^15.5.0",
+        "@smarttools/eslint-plugin-rxjs": "^1.0.22",
+        "@typescript-eslint/parser": "^8.40.0",
+        "eslint-config-next": "^15.5.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-import-resolver-typescript": "^4.4.4",
+        "eslint-plugin-fp-ts": "^0.4.0",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-n": "^17.21.3",
+        "eslint-plugin-prettier": "^5.5.4",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^5.2.0",
+        "globals": "^16.3.0",
+        "typescript-eslint": "^8.40.0"
     },
     "devDependencies": {
         "@facile-it/tsconfig": "^0.2.0",
         "@types/node": "^20.8.8",
-        "eslint": "^8.52.0",
-        "prettier": "^3.0.3",
+        "eslint": "^9.33.0",
+        "prettier": "^3.6.0",
         "typescript": "^5.2.2"
     },
     "tags": [
@@ -60,8 +74,10 @@
         "typescript",
         "react",
         "eslint",
+        "eslintconfig",
         "prettier",
         "extensible",
         "configuration"
-    ]
+    ],
+    "packageManager": "npm@10.9.0"
 }

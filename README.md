@@ -22,39 +22,75 @@ module.exports = require('eslint-config-facile/prettierrc.json')
 
 ### React
 
-_create .eslintrc.json_
+_create eslint.config.mjs_
 
-```json
-{
-    "extends": "facile/react",
-    "parserOptions": {
-        "project": "./tsconfig.json"
-    }
-}
+```ts
+import { defineConfig } from 'eslint/config'
+import react from 'eslint-config-facile/react'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
+
+export default defineConfig([
+    react,
+    {
+        languageOptions: {
+            parserOptions: {
+                tsconfigRootDir: __dirname,
+            },
+        },
+    },
+])
 ```
 
 ### Next
 
-_create .eslintrc.json_
+_create eslint.config.mjs_
 
-```json
-{
-    "extends": "facile/next",
-    "parserOptions": {
-        "project": "./tsconfig.json"
-    }
-}
+```ts
+import { defineConfig } from 'eslint/config'
+import next from 'eslint-config-facile/next'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
+
+export default defineConfig([
+    next,
+    {
+        languageOptions: {
+            parserOptions: {
+                tsconfigRootDir: __dirname,
+            },
+        },
+    },
+])
 ```
 
 ### Node
 
-_create .eslintrc.json_
+_create eslint.config.mjs_
 
-```json
-{
-    "extends": "facile/node",
-    "parserOptions": {
-        "project": "./tsconfig.json"
-    }
-}
+```ts
+import { defineConfig } from 'eslint/config'
+import node from 'eslint-config-facile/node'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
+
+export default defineConfig([
+    node,
+    {
+        languageOptions: {
+            parserOptions: {
+                tsconfigRootDir: __dirname,
+            },
+        },
+    },
+])
 ```

@@ -1,8 +1,10 @@
 {
     "extends": "@facile-it/tsconfig/tsconfig.json",
     "compilerOptions": {
-        "target": "ES2015",
-        "module": "commonjs"
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "resolveJsonModule": false
     },
-    "files": ["index.ts", "react.ts", "node.ts", "next.ts"]
+    "files": ["index.mts", "react.mts", "node.mts", "next.mts"]
 }
