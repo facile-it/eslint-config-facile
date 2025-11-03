@@ -31,14 +31,14 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
+const __dirname = path.dirname(__filename)
 
 export default defineConfig([
     react,
     {
         languageOptions: {
             parserOptions: {
-                tsconfigRootDir: __dirname,
+                tsconfigRootDir: __dirname, // or only import.meta.dirname, available after Node.js v20.11.0
             },
         },
     },
@@ -56,14 +56,14 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
+const __dirname = path.dirname(__filename)
 
 export default defineConfig([
     next,
     {
         languageOptions: {
             parserOptions: {
-                tsconfigRootDir: __dirname,
+                tsconfigRootDir: __dirname, // or only import.meta.dirname, available after Node.js v20.11.0
             },
         },
     },
@@ -81,14 +81,14 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename) // or only import.meta.dirname, available after Node.js v20.11.0
+const __dirname = path.dirname(__filename)
 
 export default defineConfig([
     node,
     {
         languageOptions: {
             parserOptions: {
-                tsconfigRootDir: __dirname,
+                tsconfigRootDir: __dirname, // or only import.meta.dirname, available after Node.js v20.11.0
             },
         },
     },
