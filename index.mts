@@ -104,6 +104,7 @@ export const facileBase = tseslint.config(
             '@typescript-eslint/dot-notation': 'error',
             '@typescript-eslint/no-namespace': 'warn',
             '@typescript-eslint/consistent-type-definitions': 'error',
+            '@typescript-eslint/consistent-type-imports': 'error',
             '@typescript-eslint/no-empty-interface': 'off',
             '@typescript-eslint/explicit-function-return-type': 'off',
             '@typescript-eslint/explicit-module-boundary-types': 'off',
