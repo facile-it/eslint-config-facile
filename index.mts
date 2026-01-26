@@ -43,7 +43,6 @@ export const facileBase = tseslint.config(
             sourceType: 'module',
             parserOptions: {
                 projectService: true,
-                project: './tsconfig.json',
                 ecmaVersion: 2022,
             },
         },
