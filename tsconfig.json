@@ -4,7 +4,8 @@
         "target": "ESNext",
         "module": "NodeNext",
         "moduleResolution": "nodenext",
-        "resolveJsonModule": false
+        "resolveJsonModule": false,
+        "types": ["node"]
     },
     "files": ["index.mts", "react.mts", "node.mts", "next.mts"]
 }
