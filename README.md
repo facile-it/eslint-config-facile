@@ -45,6 +45,31 @@ export default defineConfig([
 ])
 ```
 
+### Expo
+
+_create eslint.config.mjs_
+
+```ts
+import { defineConfig } from 'eslint/config'
+import expo from 'eslint-config-facile/expo'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+export default defineConfig([
+    expo,
+    {
+        languageOptions: {
+            parserOptions: {
+                tsconfigRootDir: __dirname, // or only import.meta.dirname, available after Node.js v20.11.0
+            },
+        },
+    },
+])
+```
+
 ### Next
 
 _create eslint.config.mjs_

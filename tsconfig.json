@@ -7,5 +7,5 @@
         "resolveJsonModule": false,
         "types": ["node"]
     },
-    "files": ["index.mts", "react.mts", "node.mts", "next.mts"]
+    "files": ["index.mts", "react.mts", "node.mts", "next.mts", "expo.mts"]
 }
