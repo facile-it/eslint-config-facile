@@ -1,37 +1,28 @@
 // @ts-check
-import { FlatCompat } from '@eslint/eslintrc'
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat'
 import tsParser from '@typescript-eslint/parser'
+import type { TSESLint } from '@typescript-eslint/utils'
 import eslint from '@eslint/js'
 // @ts-ignore
 import importPlugin from 'eslint-plugin-import'
 // @ts-ignore
 import fpTs from 'eslint-plugin-fp-ts'
 import rxjs from '@smarttools/eslint-plugin-rxjs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import tseslint from 'typescript-eslint'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const fpTsFlatAll = fpTs.configs?.['flat/all'] as TSESLint.FlatConfig.Config | undefined
 
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: eslint.configs.recommended,
-    allConfig: eslint.configs.all,
-})
-
-export const facileBase = tseslint.config(
+// Core rules shared by every flavour. It does not register the
+// `@typescript-eslint` or `import` plugins on its own because framework configs
+// (Next, Expo) already provide them.
+export const facileBaseCore = tseslint.config(
     eslint.configs.recommended,
-    tseslint.configs.recommended,
     eslintPluginPrettierRecommended,
-    ...fixupConfigRules(compat.extends('plugin:fp-ts/all')),
+    ...(fpTsFlatAll ? [fpTsFlatAll] : []),
     // @ts-ignore
     rxjs.configs.recommended,
     {
         plugins: {
-            'fp-ts': fixupPluginRules(fpTs),
             rxjs,
         },
         linterOptions: {
@@ -73,7 +64,7 @@ export const facileBase = tseslint.config(
             'no-implicit-globals': 'off',
             'no-invalid-this': 'off',
             'no-lone-blocks': 'error',
-            'no-native-reassign': 'error',
+            'no-global-assign': 'error',
             'no-nested-ternary': 'error',
             'no-new-func': 'error',
             'no-new-wrappers': 'error',
@@ -163,4 +154,11 @@ export const facileBase = tseslint.config(
     }
 )
 
-export default tseslint.config(importPlugin.flatConfigs.recommended, importPlugin.flatConfigs.typescript, facileBase)
+export const facileBase = tseslint.config(
+    tseslint.configs.recommended,
+    importPlugin.flatConfigs.recommended,
+    importPlugin.flatConfigs.typescript,
+    facileBaseCore
+)
+
+export default facileBase

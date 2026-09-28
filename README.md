@@ -119,3 +119,10 @@ export default defineConfig([
     },
 ])
 ```
+
+## Technical debt and known limitations
+
+- **ESLint 10 compatibility**: this package declares `eslint@^9.33.0 || ^10.0.0` as a peer dependency. React/Next/Expo support on ESLint 10 relies on `@eslint/compat` because upstream plugins (notably `eslint-plugin-react` and the configs shipped by `eslint-config-next`/`eslint-config-expo`) do not yet declare ESLint 10 support. Once those plugins are updated, the `@eslint/compat` shims can be removed.
+- **`npm overrides`**: the `overrides` field in `package.json` forces a single `eslint` version on plugins whose peer declarations have not been updated yet. They should be removed when each plugin officially supports ESLint 10.
+- **Temporary `eslint-plugin-fp-ts` fork**: the dependency is currently aliased to `@giacomoforlani/eslint-plugin-fp-ts-v10` to obtain flat-config/ESLint 10 support. Revert to the original package once it is updated.
+- **`eslint-config-facile/next` requires `next`**: `eslint-config-next` loads `next/dist/compiled/babel/eslint-parser`, so `next` must be installed in the consumer project.
