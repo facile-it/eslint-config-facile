@@ -12,11 +12,48 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
 const fpTsFlatAll = fpTs.configs?.['flat/all'] as TSESLint.FlatConfig.Config | undefined
 
-// Core rules shared by every flavour. It does not register the
-// `@typescript-eslint` or `import` plugins on its own because framework configs
-// (Next, Expo) already provide them.
-export const facileBaseCore = tseslint.config(
+/**
+ * Canonical plugin instances resolved by this package.
+ * Framework configs (Next, Expo) run through `fixupConfigRules` which wraps
+ * plugins in new objects, breaking ESLint's identity check (`!==`).
+ * Use `normalizePlugins` to replace wrapped instances with these canonical ones.
+ */
+const canonicalPlugins: Record<string, TSESLint.FlatConfig.Plugin> = {
+    '@typescript-eslint': tseslint.plugin as TSESLint.FlatConfig.Plugin,
+    import: importPlugin as TSESLint.FlatConfig.Plugin,
+}
+
+/**
+ * Walk an array of flat-config objects and replace any plugin registered under
+ * a known key with the canonical instance from this package.
+ * This prevents the ESLint "Cannot redefine plugin" error that occurs when
+ * `fixupConfigRules` wraps a plugin into a different object reference.
+ */
+export function normalizePlugins(
+    configs: TSESLint.FlatConfig.ConfigArray,
+    extraPlugins?: Record<string, TSESLint.FlatConfig.Plugin>
+): TSESLint.FlatConfig.ConfigArray {
+    const knownPlugins = extraPlugins ? { ...canonicalPlugins, ...extraPlugins } : canonicalPlugins
+    return configs.map(config => {
+        if (!config.plugins) return config
+        let changed = false
+        const newPlugins: Record<string, TSESLint.FlatConfig.Plugin> = {}
+        for (const [key, plugin] of Object.entries(config.plugins)) {
+            if (key in knownPlugins && plugin !== knownPlugins[key]) {
+                newPlugins[key] = knownPlugins[key]!
+                changed = true
+            } else {
+                newPlugins[key] = plugin as TSESLint.FlatConfig.Plugin
+            }
+        }
+        return changed ? { ...config, plugins: newPlugins } : config
+    })
+}
+
+export const facileBase = tseslint.config(
     eslint.configs.recommended,
+    tseslint.configs.recommended,
+    ...normalizePlugins([importPlugin.flatConfigs.recommended, importPlugin.flatConfigs.typescript]),
     eslintPluginPrettierRecommended,
     ...(fpTsFlatAll ? [fpTsFlatAll] : []),
     // @ts-ignore
@@ -152,13 +189,6 @@ export const facileBaseCore = tseslint.config(
             'fp-ts/no-module-imports': 'off',
         },
     }
-)
-
-export const facileBase = tseslint.config(
-    tseslint.configs.recommended,
-    importPlugin.flatConfigs.recommended,
-    importPlugin.flatConfigs.typescript,
-    facileBaseCore
 )
 
 export default facileBase
