@@ -20,11 +20,15 @@ export default tseslint.config(
             },
         },
 
-        settings: {
-            react: {
-                version: 'detect',
-            },
-        },
+        // TODO: restore `react.version: 'detect'` once eslint-plugin-react supports
+        // ESLint 10 (version detection uses the removed context.getFilename() API).
+        // Consumers must set `settings: { react: { version: '<major>' } }` in their
+        // own ESLint config until then.
+        // settings: {
+        //     react: {
+        //         version: 'detect',
+        //     },
+        // },
 
         rules: {
             'react/prop-types': 'off',
