@@ -2,8 +2,7 @@
 import tsParser from '@typescript-eslint/parser'
 import type { TSESLint } from '@typescript-eslint/utils'
 import eslint from '@eslint/js'
-// @ts-ignore
-import importPlugin from 'eslint-plugin-import'
+import { importX } from 'eslint-plugin-import-x'
 // @ts-ignore
 import fpTs from 'eslint-plugin-fp-ts'
 import rxjs from '@smarttools/eslint-plugin-rxjs'
@@ -20,7 +19,7 @@ const fpTsFlatAll = fpTs.configs?.['flat/all'] as TSESLint.FlatConfig.Config | u
  */
 const canonicalPlugins: Record<string, TSESLint.FlatConfig.Plugin> = {
     '@typescript-eslint': tseslint.plugin as TSESLint.FlatConfig.Plugin,
-    import: importPlugin as TSESLint.FlatConfig.Plugin,
+    'import-x': importX as TSESLint.FlatConfig.Plugin,
 }
 
 /**
@@ -53,7 +52,7 @@ export function normalizePlugins(
 export const facileBase = tseslint.config(
     eslint.configs.recommended,
     tseslint.configs.recommended,
-    ...normalizePlugins([importPlugin.flatConfigs.recommended, importPlugin.flatConfigs.typescript]),
+    ...normalizePlugins([importX.flatConfigs.recommended, importX.flatConfigs.typescript]),
     eslintPluginPrettierRecommended,
     ...(fpTsFlatAll ? [fpTsFlatAll] : []),
     // @ts-ignore
@@ -75,7 +74,7 @@ export const facileBase = tseslint.config(
             },
         },
         settings: {
-            'import/resolver': {
+            'import-x/resolver': {
                 typescript: true,
 
                 node: {
@@ -160,11 +159,11 @@ export const facileBase = tseslint.config(
             ],
 
             'prettier/prettier': 'error',
-            'import/no-deprecated': 'off',
-            'import/no-unresolved': 'off',
-            'import/export': 'off',
+            'import-x/no-deprecated': 'off',
+            'import-x/no-unresolved': 'off',
+            'import-x/export': 'off',
 
-            'import/order': [
+            'import-x/order': [
                 'error',
                 {
                     groups: ['external', 'builtin', 'parent', 'sibling', 'index'],
@@ -183,7 +182,7 @@ export const facileBase = tseslint.config(
                 },
             ],
 
-            'import/no-duplicates': 'off',
+            'import-x/no-duplicates': 'off',
             'no-duplicate-imports': ['error', { allowSeparateTypeImports: true }],
 
             'fp-ts/no-module-imports': 'off',

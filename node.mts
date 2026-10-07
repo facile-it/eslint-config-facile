@@ -16,6 +16,6 @@ export default tseslint.config(base, nodePlugin.configs['flat/recommended-script
     rules: {
         'n/no-unsupported-features/es-syntax': ['error', { ignores: ['modules'] }],
         'n/no-missing-import': 'off',
-        'import/no-unresolved': 'error',
+        'import-x/no-unresolved': 'error',
     },
 })

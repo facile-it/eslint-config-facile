@@ -12,6 +12,9 @@ export default tseslint.config(
             'react/prop-types': 'off',
             'react/display-name': 'off',
             '@typescript-eslint/no-unused-expressions': 'warn',
+            // eslint-config-next still pulls in eslint-plugin-import (legacy); disable
+            // its rules so they don't clash with the import-x equivalents from base.
+            'import/no-unresolved': 'off',
         },
     },
     reactHooksOff
