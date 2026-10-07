@@ -159,6 +159,8 @@ export const facileBase = tseslint.config(
             ],
 
             'prettier/prettier': 'error',
+            'import-x/no-named-as-default': 'off',
+            'import-x/no-named-as-default-member': 'off',
             'import-x/no-deprecated': 'off',
             'import-x/no-unresolved': 'off',
             'import-x/export': 'off',
