@@ -89,12 +89,12 @@ Prefix child patterns with the child path. Do not create an independent child co
 
 ## Framework handling
 
-| Framework           | Required handling                                                                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| React               | Read the installed `react` major. When React rules are active, add a final matching config with `settings: { react: { version: '<major>' } }`. Do not update React. |
-| Next                | Verify `next` is installed and `eslint-config-facile/next` loads. Do not update Next.                                                                               |
-| Expo / React Native | Verify the Expo preset loads with installed versions. Do not update Expo or React Native.                                                                           |
-| Node                | Preserve the consumer's module/source-type and runtime globals overrides after the Facile Node preset. Do not update Node declarations.                             |
+| Framework           | Required handling                                                                                                                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| React               | Read the installed `react` major. When React rules are active, add a final matching config with `settings: { react: { version: '<major>' } }`. Do not update React.                                 |
+| Next                | Verify `next` is installed and `eslint-config-facile/next` loads. Do not update Next.                                                                                                               |
+| Expo / React Native | Verify the Expo preset loads with installed versions. Do not update Expo or React Native.                                                                                                           |
+| Node                | Preserve module/source-type and runtime globals overrides. Change Node declarations only through the explicitly approved prerequisite flow in `SKILL.md`, never during dependency/config migration. |
 
 ## Script compatibility
 
@@ -105,7 +105,7 @@ Preserve the lint command's target set. Remove or replace an option only when ES
 Stop and request a decision for:
 
 - dirty worktree, non-Git directory, Bun, or competing package-manager evidence;
-- running Node outside the target range;
+- incompatible Node when prerequisite remediation is declined, not explicitly approved, ambiguous, only partially applicable, or cannot be validated and committed cleanly;
 - dynamic config whose effective behavior is not statically reconstructible;
 - incompatible workspaces, frameworks, presets, parsers, processors, or plugins;
 - an unverified plugin/rule mapping;

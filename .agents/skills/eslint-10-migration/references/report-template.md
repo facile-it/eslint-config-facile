@@ -9,7 +9,10 @@ Use exactly one: **Completed**, **Blocked after changes**, **Stopped without cha
 - Git root:
 - Package manager and version:
 - Existing lockfile:
-- Running Node and declared constraints:
+- Running Node and declared constraints before/after:
+- Node prerequisite remediation: not needed / declined / completed / blocked
+- Node prerequisite commit SHA: not applicable or SHA
+- Node prerequisite pushed: **No**
 - Workspaces analyzed:
 - Configurations and inheritance found:
 - Framework versions detected:
@@ -18,12 +21,13 @@ Use exactly one: **Completed**, **Blocked after changes**, **Stopped without cha
 
 | Dependency             | Before | After/target | Manifest(s) |
 | ---------------------- | ------ | ------------ | ----------- |
+| Node                   |        |              |             |
 | ESLint                 |        |              |             |
 | `eslint-config-facile` |        | `2.0.0-rc.0` |             |
 | Prettier               |        |              |             |
 | TypeScript             |        |              |             |
 
-List relevant plugin changes separately. Confirm explicitly that Node, React, React Native, Next, and Expo were not upgraded.
+List relevant plugin changes separately. Confirm explicitly that React, React Native, Next, and Expo were not upgraded. If Node changed, list only the explicitly approved prerequisite files and values, the isolated commit SHA, and confirmation that it was not pushed; otherwise confirm that Node did not change.
 
 ## Baseline
 
@@ -35,6 +39,7 @@ Never call an issue pre-existing unless this baseline observed it.
 
 ## Changes
 
+- Node prerequisite files and isolated commit, if approved:
 - Config conversion strategy and preserved scopes:
 - Files modified:
 - Files removed after confirmation:
@@ -47,6 +52,7 @@ Never call an issue pre-existing unless this baseline observed it.
 
 | Command                            | Exit code | Result |
 | ---------------------------------- | --------: | ------ |
+| Node prerequisite checks, if used  |           |        |
 | Effective config/preset load       |           |        |
 | Direct ESLint                      |           |        |
 | Canonical lint                     |           |        |

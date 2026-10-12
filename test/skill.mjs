@@ -72,8 +72,11 @@ for (const requiredText of [
     'canonical lint command',
     'typecheck and tests',
     'idempotence',
-    'Do not update Node',
-    'Do not stash, reset, checkout, commit, push',
+    'explicitly approves that exact plan',
+    'one isolated Node prerequisite commit without push',
+    'Do not bypass commit hooks',
+    'push under any circumstance',
+    'All later migration changes remain uncommitted',
     "import * as React from 'react'",
 ]) {
     assert(skill.includes(requiredText), `SKILL.md is missing guardrail: ${requiredText}`)
@@ -85,6 +88,14 @@ for (const manager of ['npm', 'pnpm', 'Yarn']) {
 const commandTargets = [...matrix.matchAll(/eslint-config-facile@([^\s`]+)/g)].map(match => match[1])
 assert.deepEqual(commandTargets, [targetVersion, targetVersion, targetVersion])
 assert(readme.includes(`eslint-config-facile@${targetVersion}`), 'README target must match the migration target')
+for (const requiredText of [
+    '### Install the skill',
+    '### Use the skill',
+    '--global --agent devin',
+    '/eslint-10-migration',
+]) {
+    assert(readme.includes(requiredText), `README is missing installation or usage guidance: ${requiredText}`)
+}
 const reportTargetRow = report.split('\n').find(line => line.includes('`eslint-config-facile`'))
 assert(reportTargetRow?.includes(`\`${targetVersion}\``), 'report target must match the migration target')
 for (const preset of ['facile', 'facile/node', 'facile/react', 'facile/next', 'facile/expo']) {
@@ -94,6 +105,9 @@ for (const field of [
     'Package manager and version',
     'Workspaces analyzed',
     'Configurations and inheritance found',
+    'Node prerequisite commit SHA',
+    'Node prerequisite pushed',
+    'Node prerequisite checks',
     'Baseline',
     'Files modified',
     'Files removed after confirmation',
@@ -142,6 +156,15 @@ const pnpmFixture = fixtures.find(fixture => fixture.id === 'pnpm-nested-monorep
 assert(Object.keys(pnpmFixture.files).filter(file => file.endsWith('.eslintrc.json')).length > 1)
 const yarnFixture = fixtures.find(fixture => fixture.id === 'yarn-eslint9-flat')
 assert(yarnFixture.files['eslint.shared.mjs'])
+const incompatibleNode = fixtures.find(fixture => fixture.id === 'incompatible-node')
+assert.equal(incompatibleNode.expect.status, 'node-remediation-decision-required')
+for (const invariant of [
+    'no Node changes before explicit approval',
+    'one isolated Node prerequisite commit',
+    'no push',
+]) {
+    assert(incompatibleNode.expect.preserve.includes(invariant), `incompatible-node is missing invariant: ${invariant}`)
+}
 const alreadyMigrated = fixtures.find(fixture => fixture.id === 'already-migrated')
 const alreadyMigratedPackage = JSON.parse(alreadyMigrated.files['package.json'])
 assert.equal(alreadyMigratedPackage.devDependencies['eslint-config-facile'], packageJson.version)

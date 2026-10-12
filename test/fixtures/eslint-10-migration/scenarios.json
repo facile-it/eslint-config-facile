@@ -119,8 +119,13 @@
             ".eslintrc.json": "{\"extends\":\"facile\"}"
         },
         "expect": {
-            "status": "stopped-without-changes",
-            "preserve": ["engines", ".nvmrc"],
+            "status": "node-remediation-decision-required",
+            "preserve": [
+                "no Node changes before explicit approval",
+                "coherent engines and .nvmrc update",
+                "one isolated Node prerequisite commit",
+                "no push"
+            ],
             "lockfile": "package-lock.json"
         }
     },

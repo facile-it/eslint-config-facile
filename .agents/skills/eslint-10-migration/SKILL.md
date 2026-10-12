@@ -14,8 +14,9 @@ Complete the phases in order. A **STOP** means: make no further changes, explain
 - Cover the repository root and every workspace in one migration.
 - Preserve the existing package manager and lockfile format. Never create a second lockfile.
 - Use the package manager to change dependencies and update its lockfile; do not hand-edit a lockfile.
-- Do not update Node, CI images, Docker images, Volta, `.nvmrc`, React, React Native, Next, Expo, or other application frameworks.
-- Do not stash, reset, checkout, commit, push, or silently roll back changes.
+- Do not update React, React Native, Next, Expo, or other application frameworks. Update Node declarations only through the explicitly approved prerequisite flow in Phase 1; never change them during the migration itself.
+- Do not stash, reset, checkout, push, or silently roll back changes. Do not commit except for the one isolated Node prerequisite commit explicitly authorized in Phase 1; the ESLint migration remains uncommitted.
+- Do not bypass commit hooks, amend an existing commit, force any Git operation, or push under any circumstance.
 - Do not disable rules, lower severities, or add `eslint-disable`, `@ts-ignore`, or equivalent suppressions merely to obtain a passing lint.
 - Do not copy `eslint-config-facile`'s internal compatibility shims, plugin normalization, or package overrides into the consumer.
 - Do not perform unrelated refactors or cosmetic modernization.
@@ -36,7 +37,7 @@ Perform every check before modifying any file.
     - Bun: `bun.lock` or `bun.lockb`
 6. If Bun is in use, or competing package-manager evidence indicates multiple active package managers, **STOP** without changes. Do not infer a winner from modification times.
 7. Record the package-manager version declared by `packageManager`; use the repository's established Corepack or package-manager invocation.
-8. Record `node --version` and every declared Node constraint (`engines`, Volta, `.nvmrc`, tool-version files, CI, and containers). Compare both the running version and the repository's supported runtime contract with the target requirement in `references/target.md`. If the current runtime is incompatible, or the declared contract still requires runtimes excluded by the target, **STOP** without changing any runtime declaration.
+8. Record `node --version` and every declared Node constraint (`engines`, Volta, `.nvmrc`, tool-version files, CI, and containers). Compare both the running version and the repository's supported runtime contract with the target requirement in `references/target.md`. If either is incompatible, mark Node prerequisite remediation as required, make no changes yet, and continue the remaining read-only preflight checks.
 9. Find every ESLint configuration and ignore source, including:
     - `.eslintrc`, `.eslintrc.json`, `.eslintrc.yml`, `.eslintrc.yaml`, `.eslintrc.js`, and `.eslintrc.cjs`;
     - `eslintConfig` in every `package.json`;
@@ -51,6 +52,15 @@ Perform every check before modifying any file.
     - lockfiles and package-manager evidence.
 11. If a JavaScript config is dynamic and its effective branches cannot be reconstructed statically for the current repository, **STOP** and identify the dynamic expressions.
 12. Compare all workspaces. If they cannot move together without incompatible ESLint or `eslint-config-facile` combinations, **STOP**.
+13. If Node prerequisite remediation is required, handle it only after every other read-only preflight check has passed:
+    - List every affected file and current value, explain why it blocks the migration, and present an exact prerequisite-only plan containing each proposed value, any package-manager-generated lockfile update, the validation commands, and the proposed commit message.
+    - Ask whether the user explicitly approves that exact plan and authorizes one isolated Node prerequisite commit without push. Approval applies only to the listed files and values. If the user declines or does not choose, **STOP** without changes.
+    - Do not infer a Node release line. Preserve an already established supported line when the repository makes it unambiguous; otherwise ask the user to choose among the supported lines from `references/target.md`. Do not broaden `engines.node` beyond repository policy merely to copy the complete target range.
+    - After approval, update all affected Node declarations coherently and nothing else. This may include `engines`, Volta, `.nvmrc`, tool-version files, direct CI runtime declarations, and container base images only when their mapping is unambiguous. If a declaration is generated, shared externally, digest-pinned without a verified replacement, or otherwise ambiguous, **STOP** before editing and ask the user to handle the prerequisite. Never perform a partial Node upgrade.
+    - Use the existing package manager only if needed to keep its lockfile consistent with an approved manifest change. Do not update ESLint or any unrelated dependency in this prerequisite step.
+    - Re-read every Node declaration, run `node --version`, the package-manager version command, the repository's existing runtime/engine check when present, and `git diff --check`. Do not install or replace a system-wide Node toolchain. If the active runtime remains incompatible, ask the user to activate the approved version and **STOP** until it is verifiably active.
+    - Before committing, show the resulting diff and confirm that `git status --short` contains only the approved Node prerequisite files and any required generated lockfile. Stage only those paths and create one commit using the approved message and the repository's commit convention. Do not amend, bypass hooks, or push. If a hook changes files or the commit fails, **STOP**, preserve the visible state, and report the failure instead of retrying with bypass flags.
+    - Record the prerequisite commit SHA, verify that `git status --short` is empty, and then continue to Phase 2. All later migration changes remain uncommitted. If the worktree is not clean after the commit, **STOP**.
 
 ## Phase 2: baseline
 
@@ -134,7 +144,7 @@ Create valid flat configuration using only public `eslint-config-facile` entry p
 3. Once the flat config loads and the full lint passes, list obsolete `.eslintrc*` and `.eslintignore` files and ask for explicit confirmation before deleting them. Do not delete them beforehand.
 4. If confirmed, remove only the listed obsolete files and rerun the complete lint command. If not confirmed, leave them and report them as remaining cleanup.
 5. Run `git diff --check` and inspect `git status --short` and the final diff.
-6. Confirm there is still exactly one package-manager family/lockfile and that Node/framework declarations did not change.
+6. Confirm there is still exactly one package-manager family/lockfile, that application framework declarations did not change, and that Node declarations match the approved prerequisite commit with no later migration-phase edits.
 7. Check idempotence without making speculative updates: manifests already target the recorded versions, flat config has no legacy conversion left, and rerunning the package-manager install plus verification produces no tracked diff. Report any drift instead of hiding it.
 
 ## Phase 9: report
