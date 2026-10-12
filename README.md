@@ -10,6 +10,24 @@ npm install -D eslint-config-facile eslint prettier
 
 **Note** `eslint`, `prettier`, `typescript` are a peer dependencies
 
+## Automated ESLint 10 migration
+
+Install the cross-agent migration skill directly from this public repository:
+
+```sh
+npx skills add facile-it/eslint-config-facile@eslint-10-migration
+```
+
+The default install is project-local and creates skill metadata in the consumer repository; commit those files before invoking the skill so its clean-worktree preflight can pass. To keep the consumer worktree untouched, install it globally instead:
+
+```sh
+npx skills add facile-it/eslint-config-facile@eslint-10-migration --global
+```
+
+Invoke `eslint-10-migration` in Devin, Claude Code, or Cursor from the root of the consumer repository. The skill inventories every workspace, migrates legacy and flat configurations to ESLint 10 and `eslint-config-facile@2.0.0-rc.0`, preserves custom scopes and rules, runs autofix, and reports all verification commands.
+
+The migration requires a clean Git worktree and Node `^20.19.0 || ^22.13.0 || >=24`. It supports npm, pnpm, and Yarn; Bun and competing lockfiles are blockers. It never upgrades Node or application frameworks, and it stops for incompatible plugins, ambiguous configuration behavior, broad source rewrites, or removal of legacy config files requiring confirmation.
+
 ## Prettier config
 
 _create .prettierrc.js_

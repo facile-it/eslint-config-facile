@@ -1,0 +1,170 @@
+[
+    {
+        "id": "npm-eslint8-legacy",
+        "manager": "npm",
+        "files": {
+            "package.json": "{\"devDependencies\":{\"eslint\":\"^8.57.0\",\"eslint-config-facile\":\"^0.12.0\",\"prettier\":\"^3.0.3\",\"typescript\":\"^5.2.2\"},\"scripts\":{\"lint\":\"eslint src --ext .ts\"}}",
+            "package-lock.json": "{}",
+            ".eslintrc.json": "{\"extends\":\"facile/node\",\"parserOptions\":{\"project\":\"./tsconfig.json\"},\"rules\":{\"no-console\":\"warn\"}}",
+            ".eslintignore": "dist\ntemp.js\n",
+            "src/index.ts": "export const answer = 42\n"
+        },
+        "expect": {
+            "status": "completed",
+            "preserve": ["no-console severity", "dist ignore", "nested temp.js ignore semantics"],
+            "lockfile": "package-lock.json"
+        }
+    },
+    {
+        "id": "yarn-eslint9-flat",
+        "manager": "yarn",
+        "files": {
+            "package.json": "{\"packageManager\":\"yarn@4.6.0\",\"devDependencies\":{\"eslint\":\"^9.33.0\",\"eslint-config-facile\":\"^1.2.0\"},\"scripts\":{\"lint\":\"eslint .\"}}",
+            "yarn.lock": "",
+            "eslint.shared.mjs": "export const ignores = { ignores: ['coverage/**'] }\n",
+            "eslint.config.mjs": "import base from 'eslint-config-facile'\nimport { ignores } from './eslint.shared.mjs'\nexport default [ignores, ...base, { rules: { eqeqeq: 'warn' } }]\n"
+        },
+        "expect": {
+            "status": "completed",
+            "preserve": ["shared export", "coverage ignore", "eqeqeq severity"],
+            "lockfile": "yarn.lock"
+        }
+    },
+    {
+        "id": "pnpm-nested-monorepo",
+        "manager": "pnpm",
+        "files": {
+            "package.json": "{\"private\":true,\"packageManager\":\"pnpm@10.18.0\",\"devDependencies\":{\"eslint\":\"^8.57.0\",\"eslint-config-facile\":\"^0.12.0\"},\"scripts\":{\"lint\":\"eslint packages\"}}",
+            "pnpm-lock.yaml": "lockfileVersion: '9.0'\n",
+            "pnpm-workspace.yaml": "packages:\n  - packages/*\n",
+            ".eslintrc.json": "{\"extends\":\"facile\",\"rules\":{\"curly\":\"warn\"}}",
+            "packages/api/.eslintrc.json": "{\"extends\":\"facile/node\",\"rules\":{\"no-console\":\"off\"}}",
+            "packages/web/.eslintrc.json": "{\"extends\":\"facile/react\",\"rules\":{\"react/display-name\":\"warn\"}}",
+            "packages/api/src/index.ts": "export const api = true\n",
+            "packages/web/src/app.tsx": "export const App = () => <main />\n"
+        },
+        "expect": {
+            "status": "completed",
+            "preserve": ["root precedence", "api scope", "web scope"],
+            "lockfile": "pnpm-lock.yaml"
+        }
+    },
+    {
+        "id": "react-preset",
+        "manager": "npm",
+        "files": {
+            "package.json": "{\"dependencies\":{\"react\":\"^18.3.1\"},\"devDependencies\":{\"eslint\":\"^9.33.0\",\"eslint-config-facile\":\"^1.2.0\"}}",
+            "package-lock.json": "{}",
+            "eslint.config.mjs": "import react from 'eslint-config-facile/react'\nexport default [...react]\n",
+            "src/app.tsx": "export const App = () => <main />\n"
+        },
+        "expect": {
+            "status": "completed",
+            "preserve": ["react preset", "explicit React major 18"],
+            "lockfile": "package-lock.json"
+        }
+    },
+    {
+        "id": "next-preset",
+        "manager": "npm",
+        "files": {
+            "package.json": "{\"dependencies\":{\"next\":\"^16.0.0\",\"react\":\"^19.0.0\"},\"devDependencies\":{\"eslint\":\"^9.33.0\",\"eslint-config-facile\":\"^1.2.0\"}}",
+            "package-lock.json": "{}",
+            "eslint.config.mjs": "import next from 'eslint-config-facile/next'\nexport default [...next]\n",
+            "app/page.tsx": "export default function Page() { return <main /> }\n"
+        },
+        "expect": {
+            "status": "completed",
+            "preserve": ["next preset", "installed Next", "explicit React major 19"],
+            "lockfile": "package-lock.json"
+        }
+    },
+    {
+        "id": "expo-preset",
+        "manager": "npm",
+        "files": {
+            "package.json": "{\"dependencies\":{\"expo\":\"^54.0.0\",\"react\":\"^19.1.0\",\"react-native\":\"^0.81.0\"},\"devDependencies\":{\"eslint\":\"^9.33.0\",\"eslint-config-facile\":\"^1.2.0\"}}",
+            "package-lock.json": "{}",
+            "eslint.config.mjs": "import expo from 'eslint-config-facile/expo'\nexport default [...expo]\n",
+            "app.tsx": "export default function App() { return null }\n"
+        },
+        "expect": {
+            "status": "completed",
+            "preserve": ["expo preset", "React Native version", "explicit React major 19"],
+            "lockfile": "package-lock.json"
+        }
+    },
+    {
+        "id": "baseline-errors",
+        "manager": "npm",
+        "files": {
+            "package.json": "{\"devDependencies\":{\"eslint\":\"^8.57.0\",\"eslint-config-facile\":\"^0.12.0\"},\"scripts\":{\"lint\":\"eslint src\"}}",
+            "package-lock.json": "{}",
+            ".eslintrc.json": "{\"extends\":\"facile/node\"}",
+            "src/index.js": "console.log('existing finding')\n"
+        },
+        "expect": {
+            "status": "incomplete-until-confirmed",
+            "preserve": ["baseline finding classification", "no silent baseline fix"],
+            "lockfile": "package-lock.json"
+        }
+    },
+    {
+        "id": "incompatible-node",
+        "manager": "npm",
+        "files": {
+            "package.json": "{\"engines\":{\"node\":\"18.x\"},\"devDependencies\":{\"eslint\":\"^8.57.0\",\"eslint-config-facile\":\"^0.12.0\"}}",
+            "package-lock.json": "{}",
+            ".nvmrc": "18\n",
+            ".eslintrc.json": "{\"extends\":\"facile\"}"
+        },
+        "expect": {
+            "status": "stopped-without-changes",
+            "preserve": ["engines", ".nvmrc"],
+            "lockfile": "package-lock.json"
+        }
+    },
+    {
+        "id": "dynamic-config",
+        "manager": "npm",
+        "files": {
+            "package.json": "{\"devDependencies\":{\"eslint\":\"^8.57.0\",\"eslint-config-facile\":\"^0.12.0\"}}",
+            "package-lock.json": "{}",
+            ".eslintrc.cjs": "module.exports = require(process.env.ESLINT_CONFIG_PATH)\n"
+        },
+        "expect": {
+            "status": "stopped-without-changes",
+            "preserve": ["dynamic config"],
+            "lockfile": "package-lock.json"
+        }
+    },
+    {
+        "id": "bun-unsupported",
+        "manager": "bun",
+        "files": {
+            "package.json": "{\"packageManager\":\"bun@1.3.0\",\"devDependencies\":{\"eslint\":\"^9.33.0\",\"eslint-config-facile\":\"^1.2.0\"}}",
+            "bun.lock": "",
+            "eslint.config.mjs": "import base from 'eslint-config-facile'\nexport default [...base]\n"
+        },
+        "expect": {
+            "status": "stopped-without-changes",
+            "preserve": ["all files"],
+            "lockfile": "bun.lock"
+        }
+    },
+    {
+        "id": "already-migrated",
+        "manager": "npm",
+        "files": {
+            "package.json": "{\"engines\":{\"node\":\"^20.19.0 || ^22.13.0 || >=24\"},\"devDependencies\":{\"eslint\":\"^10.0.0\",\"eslint-config-facile\":\"2.0.0-rc.0\",\"prettier\":\"^3.6.0\",\"typescript\":\"^6.0.0\"},\"scripts\":{\"lint\":\"eslint .\"}}",
+            "package-lock.json": "{}",
+            "eslint.config.mjs": "import { defineConfig } from 'eslint/config'\nimport base from 'eslint-config-facile'\nexport default defineConfig([base])\n",
+            "src/index.ts": "export const migrated = true\n"
+        },
+        "expect": {
+            "status": "completed-no-diff",
+            "preserve": ["all tracked content"],
+            "lockfile": "package-lock.json"
+        }
+    }
+]

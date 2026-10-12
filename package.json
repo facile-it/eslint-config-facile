@@ -33,6 +33,7 @@
         "pretest": "npm run build",
         "test": "eslint ./test/. -c ./test/_config.mjs --ext .ts",
         "test:smoke": "node ./test/smoke.mjs",
+        "test:skill": "node ./test/skill.mjs",
         "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
