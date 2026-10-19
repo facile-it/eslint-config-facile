@@ -51,6 +51,22 @@ The skill inventories every workspace, migrates legacy and flat configurations t
 
 The migration requires a clean Git worktree and Node `^20.19.0 || ^22.13.0 || >=24`. When Node declarations are incompatible, the skill first presents an exact prerequisite-only update plan and asks whether it may apply and commit that plan without pushing. It proceeds only after explicit approval and a successful isolated commit; ambiguous or unverifiable Node upgrades remain blockers. npm, pnpm, and Yarn are supported; Bun and competing lockfiles are blockers. Application frameworks are never upgraded, and the skill stops for incompatible plugins, ambiguous configuration behavior, broad source rewrites, or removal of legacy config files requiring confirmation.
 
+For pnpm consumers, merge this compatibility allowance into the root `package.json` before installing the migration dependencies:
+
+```json
+{
+    "pnpm": {
+        "peerDependencyRules": {
+            "allowedVersions": {
+                "eslint": "10"
+            }
+        }
+    }
+}
+```
+
+Some upstream plugins used by the shared config are compatible through its shims but still publish peer ranges that exclude ESLint 10. This setting tells pnpm to accept ESLint 10 for those peer relationships; it does not override or select the installed ESLint version. Preserve any existing `pnpm` settings when adding it.
+
 Devin Cloud does not inherit skills installed globally on a local machine. For Cloud use, keep the skill in the consumer repository or use a Cloud Playbook that reads this skill and its references from GitHub before operating on the consumer.
 
 ## Prettier config

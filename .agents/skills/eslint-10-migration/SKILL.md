@@ -79,6 +79,7 @@ Before editing, present a concise plan containing:
 - all config files and their conversion strategy;
 - workspace/file scopes that replace legacy cascading;
 - expected dependency removals/additions;
+- for pnpm, the root manifest compatibility allowance and any existing `pnpm` settings to preserve;
 - baseline status;
 - known blockers or decisions.
 
@@ -87,13 +88,14 @@ Before editing, present a concise plan containing:
 ## Phase 4: dependencies
 
 1. Use the exact `eslint-config-facile` target and supported ranges from `references/target.md`; never resolve `latest`.
-2. Update all manifests that directly declare ESLint or `eslint-config-facile`. Do not leave a workspace on an incompatible major.
-3. Upgrade Prettier only when its resolved/declared version is below the target peer range.
-4. Upgrade TypeScript only when it is outside the supported target range. Preserve a supported TypeScript version.
-5. Keep third-party ESLint plugins only after verifying ESLint 10 compatibility and a flat-config path or an unambiguous conversion. Upgrade a plugin only when necessary and compatibility is verifiable.
-6. If a required third-party preset/plugin is not compatible or cannot be converted unambiguously, **STOP** without removing it.
-7. Do not update application frameworks to satisfy an ESLint preset. For the Next preset, verify `next` is installed in the consumer; otherwise **STOP**.
-8. Execute the package-manager command from `references/migration-matrix.md`, scoped according to the repository's workspace conventions. Verify that only the existing lockfile changed and that dependency resolution succeeds.
+2. For pnpm, merge `pnpm.peerDependencyRules.allowedVersions.eslint: "10"` into the root manifest before the dependency update. Preserve all existing `pnpm` settings. This allowance is required because some upstream plugins still publish peer ranges that exclude ESLint 10 even though this package supplies compatibility shims; it accepts that peer relationship without overriding or selecting the installed ESLint version.
+3. Update all manifests that directly declare ESLint or `eslint-config-facile`. Do not leave a workspace on an incompatible major.
+4. Upgrade Prettier only when its resolved/declared version is below the target peer range.
+5. Upgrade TypeScript only when it is outside the supported target range. Preserve a supported TypeScript version.
+6. Keep third-party ESLint plugins only after verifying ESLint 10 compatibility and a flat-config path or an unambiguous conversion. Upgrade a plugin only when necessary and compatibility is verifiable.
+7. If a required third-party preset/plugin is not compatible or cannot be converted unambiguously, **STOP** without removing it.
+8. Do not update application frameworks to satisfy an ESLint preset. For the Next preset, verify `next` is installed in the consumer; otherwise **STOP**.
+9. Execute the package-manager command from `references/migration-matrix.md`, scoped according to the repository's workspace conventions. Verify that only the existing lockfile changed and that dependency resolution succeeds.
 
 ## Phase 5: convert configuration
 

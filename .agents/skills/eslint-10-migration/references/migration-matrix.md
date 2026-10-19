@@ -12,6 +12,22 @@ The commands below save both migration dependencies exactly so the first run is 
 | pnpm    | `pnpm add --save-dev --save-exact eslint-config-facile@2.0.0-rc.0 eslint@^10.0.0`    |
 | Yarn    | `yarn add --dev --exact eslint-config-facile@2.0.0-rc.0 eslint@^10.0.0`              |
 
+For pnpm, merge the following into the root manifest before running the update operation (preserve all existing `pnpm` settings):
+
+```json
+{
+    "pnpm": {
+        "peerDependencyRules": {
+            "allowedVersions": {
+                "eslint": "10"
+            }
+        }
+    }
+}
+```
+
+Some upstream plugins used by the shared config are compatible through its shims but still publish peer ranges that exclude ESLint 10. This setting tells pnpm to accept ESLint 10 for those peer relationships; it does not override or select the installed ESLint version.
+
 Add Prettier or TypeScript to the same operation only when their current versions fall outside the ranges in `target.md`. Use workspace-root flags only when the repository's existing ownership requires them. Do not invent a workspace root dependency when individual workspaces own the tooling.
 
 ## Facile preset mappings

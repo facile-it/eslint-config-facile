@@ -72,6 +72,7 @@ for (const requiredText of [
     'canonical lint command',
     'typecheck and tests',
     'idempotence',
+    'pnpm.peerDependencyRules.allowedVersions.eslint',
     'explicitly approves that exact plan',
     'one isolated Node prerequisite commit without push',
     'Do not bypass commit hooks',
@@ -95,6 +96,18 @@ for (const requiredText of [
     '/eslint-10-migration',
 ]) {
     assert(readme.includes(requiredText), `README is missing installation or usage guidance: ${requiredText}`)
+}
+for (const [label, source] of [
+    ['README', readme],
+    ['migration matrix', matrix],
+]) {
+    for (const requiredText of ['"peerDependencyRules"', '"allowedVersions"', '"eslint": "10"']) {
+        assert(source.includes(requiredText), `${label} is missing pnpm allowance JSON: ${requiredText}`)
+    }
+    assert(
+        source.includes('does not override or select the installed ESLint version'),
+        `${label} is missing the pnpm allowance explanation`
+    )
 }
 const reportTargetRow = report.split('\n').find(line => line.includes('`eslint-config-facile`'))
 assert(reportTargetRow?.includes(`\`${targetVersion}\``), 'report target must match the migration target')
