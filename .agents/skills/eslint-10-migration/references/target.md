@@ -32,7 +32,7 @@ All entry points export flat-config arrays. Compose them with `defineConfig` fro
 - `eslint-plugin-import` has been replaced by `eslint-plugin-import-x`; consumer-owned equivalent custom rules use the `import-x/` namespace only after rule compatibility is verified.
 - React version auto-detection is temporarily unavailable under ESLint 10. React-based consumers must set `settings.react.version` to their installed React major when the React plugin is active.
 - Next consumers must already have `next` installed because the Next config resolves its parser from that package.
-- Compatibility wrappers, plugin normalization, and upstream overrides are internal to `eslint-config-facile`; consumers must not copy them.
+- Compatibility wrappers and plugin normalization are internal to `eslint-config-facile`; consumers must not copy them. The package-manager compatibility metadata in `references/migration-matrix.md` is the only documented exception.
 
 ## Release update rule
 

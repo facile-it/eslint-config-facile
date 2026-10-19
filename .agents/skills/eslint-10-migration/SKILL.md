@@ -18,7 +18,7 @@ Complete the phases in order. A **STOP** means: make no further changes, explain
 - Do not stash, reset, checkout, push, or silently roll back changes. Do not commit except for the one isolated Node prerequisite commit explicitly authorized in Phase 1; the ESLint migration remains uncommitted.
 - Do not bypass commit hooks, amend an existing commit, force any Git operation, or push under any circumstance.
 - Do not disable rules, lower severities, or add `eslint-disable`, `@ts-ignore`, or equivalent suppressions merely to obtain a passing lint.
-- Do not copy `eslint-config-facile`'s internal compatibility shims, plugin normalization, or package overrides into the consumer.
+- Do not copy `eslint-config-facile`'s internal compatibility shims or plugin normalization into the consumer. Add only the package-manager compatibility metadata documented in `references/migration-matrix.md`.
 - Do not perform unrelated refactors or cosmetic modernization.
 - Do not expose secrets, tokens, environment contents, or sensitive source in the report.
 
@@ -79,7 +79,7 @@ Before editing, present a concise plan containing:
 - all config files and their conversion strategy;
 - workspace/file scopes that replace legacy cascading;
 - expected dependency removals/additions;
-- for pnpm, the root manifest compatibility allowance and any existing `pnpm` settings to preserve;
+- package-manager-specific peer handling: the pnpm allowance, the npm root overrides, or the expected Yarn warnings, including existing settings to preserve;
 - baseline status;
 - known blockers or decisions.
 
@@ -88,7 +88,11 @@ Before editing, present a concise plan containing:
 ## Phase 4: dependencies
 
 1. Use the exact `eslint-config-facile` target and supported ranges from `references/target.md`; never resolve `latest`.
-2. For pnpm, merge `pnpm.peerDependencyRules.allowedVersions.eslint: "10"` into the root manifest before the dependency update. Preserve all existing `pnpm` settings. This allowance is required because some upstream plugins still publish peer ranges that exclude ESLint 10 even though this package supplies compatibility shims; it accepts that peer relationship without overriding or selecting the installed ESLint version.
+2. Apply peer-range handling according to the detected package manager:
+    - For pnpm, merge `pnpm.peerDependencyRules.allowedVersions.eslint: "10"` into the root manifest before the dependency update. Preserve all existing `pnpm` settings. This allowance is required because some upstream plugins still publish peer ranges that exclude ESLint 10 even though this package supplies compatibility shims; it accepts that peer relationship without overriding or selecting the installed ESLint version.
+    - For npm, merge the four root `overrides` from `references/migration-matrix.md` before the dependency update, preserving every existing override. Use `$eslint` exactly so the affected plugins resolve against the consumer's declared ESLint version; dependency-package overrides are not inherited by the consumer.
+    - For Yarn, do not add the pnpm block, `resolutions`, `packageExtensions`, or broad log filters. Yarn cannot replace these existing peer ranges through `packageExtensions`; the expected peer-range warnings alone are not blockers.
+    - If the dependency update exits non-zero because an existing strict peer-dependency policy rejects an upstream range, **STOP** and report the exact error; do not use `--force`, `--legacy-peer-deps`, `--ignore-peer-dependencies`, or relax repository policy.
 3. Update all manifests that directly declare ESLint or `eslint-config-facile`. Do not leave a workspace on an incompatible major.
 4. Upgrade Prettier only when its resolved/declared version is below the target peer range.
 5. Upgrade TypeScript only when it is outside the supported target range. Preserve a supported TypeScript version.

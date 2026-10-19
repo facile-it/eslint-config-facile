@@ -67,6 +67,29 @@ For pnpm consumers, merge this compatibility allowance into the root `package.js
 
 Some upstream plugins used by the shared config are compatible through its shims but still publish peer ranges that exclude ESLint 10. This setting tells pnpm to accept ESLint 10 for those peer relationships; it does not override or select the installed ESLint version. Preserve any existing `pnpm` settings when adding it.
 
+The `pnpm.peerDependencyRules` block is pnpm-specific. For npm consumers, `overrides` declared by `eslint-config-facile` are not inherited, so merge the equivalent overrides into the consumer's root `package.json`:
+
+```json
+{
+    "overrides": {
+        "eslint-plugin-import": {
+            "eslint": "$eslint"
+        },
+        "eslint-plugin-jsx-a11y": {
+            "eslint": "$eslint"
+        },
+        "eslint-plugin-react": {
+            "eslint": "$eslint"
+        },
+        "eslint-plugin-react-hooks": {
+            "eslint": "$eslint"
+        }
+    }
+}
+```
+
+These npm overrides make the affected plugins use the consumer's declared ESLint version; preserve any existing `overrides` entries when merging them. Yarn has no direct equivalent that replaces an already-declared peer range: Yarn installs successfully but reports the upstream mismatch as peer warnings. Do not add `resolutions`, ineffective `packageExtensions`, or broad log filters merely to hide those warnings. The permanent fix is an upstream release that declares ESLint 10 support. If an existing strict peer-dependency policy makes installation fail, keep that policy intact and treat the failure as a migration blocker.
+
 Devin Cloud does not inherit skills installed globally on a local machine. For Cloud use, keep the skill in the consumer repository or use a Cloud Playbook that reads this skill and its references from GitHub before operating on the consumer.
 
 ## Prettier config

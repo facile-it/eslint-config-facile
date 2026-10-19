@@ -28,6 +28,29 @@ For pnpm, merge the following into the root manifest before running the update o
 
 Some upstream plugins used by the shared config are compatible through its shims but still publish peer ranges that exclude ESLint 10. This setting tells pnpm to accept ESLint 10 for those peer relationships; it does not override or select the installed ESLint version.
 
+The `pnpm.peerDependencyRules` block is pnpm-specific. For npm, merge these overrides into the root manifest before the update operation; overrides declared by a dependency are not inherited by its consumer:
+
+```json
+{
+    "overrides": {
+        "eslint-plugin-import": {
+            "eslint": "$eslint"
+        },
+        "eslint-plugin-jsx-a11y": {
+            "eslint": "$eslint"
+        },
+        "eslint-plugin-react": {
+            "eslint": "$eslint"
+        },
+        "eslint-plugin-react-hooks": {
+            "eslint": "$eslint"
+        }
+    }
+}
+```
+
+The npm overrides make those plugins use the consumer's declared ESLint version. Preserve all existing root `overrides` when merging them. Yarn has no direct equivalent that replaces an already-declared peer range: peer-range warnings are expected and are not blockers. Do not add `resolutions`, ineffective `packageExtensions`, or broad log filters merely to hide them. If an existing strict peer-dependency policy makes the update exit non-zero, stop and report the exact error instead of forcing installation or weakening repository policy.
+
 Add Prettier or TypeScript to the same operation only when their current versions fall outside the ranges in `target.md`. Use workspace-root flags only when the repository's existing ownership requires them. Do not invent a workspace root dependency when individual workspaces own the tooling.
 
 ## Facile preset mappings
@@ -100,7 +123,7 @@ Prefix child patterns with the child path. Do not create an independent child co
 
 - For direct `eslint-plugin-import` usage, inventory every `import/*` rule/config first. Rename a custom rule to `import-x/<same-rule>` only after confirming that rule and its options exist in the installed `eslint-plugin-import-x` version.
 - Do not remove `eslint-plugin-import` while any direct config, processor, rule, or shared export still refers to it.
-- Do not add `@eslint/compat`, Facile's plugin normalization, or Facile's package-manager overrides to the consumer.
+- Do not add `@eslint/compat` or Facile's plugin normalization to the consumer. Add only the package-manager compatibility metadata documented in this matrix.
 - A third-party plugin with no verified ESLint 10 support and no unambiguous flat-config representation is a blocker, not a deletion candidate.
 
 ## Framework handling

@@ -97,6 +97,9 @@ for (const requiredText of [
 ]) {
     assert(readme.includes(requiredText), `README is missing installation or usage guidance: ${requiredText}`)
 }
+const npmOverridePlugins = Object.entries(packageJson.overrides ?? {})
+    .filter(([, override]) => override?.eslint === '$eslint')
+    .map(([plugin]) => plugin)
 for (const [label, source] of [
     ['README', readme],
     ['migration matrix', matrix],
@@ -107,6 +110,28 @@ for (const [label, source] of [
     assert(
         source.includes('does not override or select the installed ESLint version'),
         `${label} is missing the pnpm allowance explanation`
+    )
+    for (const plugin of npmOverridePlugins) {
+        assert(source.includes(`"${plugin}"`), `${label} is missing npm override for ${plugin}`)
+    }
+    assert(source.includes('"eslint": "$eslint"'), `${label} is missing the npm $eslint override`)
+    assert(source.includes('Yarn has no direct equivalent'), `${label} is missing the Yarn guidance`)
+}
+for (const requiredText of [
+    'the npm root overrides',
+    'For npm, merge the four root `overrides`',
+    'For Yarn, do not add the pnpm block',
+    'expected peer-range warnings alone are not blockers',
+]) {
+    assert(skill.includes(requiredText), `SKILL.md is missing package-manager peer handling: ${requiredText}`)
+}
+for (const [label, source] of [
+    ['target', target],
+    ['migration matrix', matrix],
+]) {
+    assert(
+        source.includes('package-manager compatibility metadata'),
+        `${label} is missing the documented package-manager metadata exception`
     )
 }
 const reportTargetRow = report.split('\n').find(line => line.includes('`eslint-config-facile`'))
