@@ -73,11 +73,16 @@ for (const requiredText of [
     'typecheck and tests',
     'idempotence',
     'pnpm.peerDependencyRules.allowedVersions.eslint',
-    'explicitly approves that exact plan',
-    'one isolated Node prerequisite commit without push',
+    'explicitly approves that exact Node remediation plan',
+    'one isolated Node prerequisite commit',
     'Do not bypass commit hooks',
-    'push under any circumstance',
-    'All later migration changes remain uncommitted',
+    'By default, leave all verified migration changes uncommitted',
+    'Do not ask for confirmation again when an instruction already authorizes an action',
+    'A request to open a merge request or pull request authorizes',
+    'A direct commit or push to the default or protected branch is allowed only when the user explicitly requests that exact action and destination',
+    'Invoking this skill alone does not authorize any Git or delivery action',
+    'Phase 9: requested Git and delivery actions',
+    'Never force-push',
     "import * as React from 'react'",
 ]) {
     assert(skill.includes(requiredText), `SKILL.md is missing guardrail: ${requiredText}`)
@@ -144,7 +149,11 @@ for (const field of [
     'Workspaces analyzed',
     'Configurations and inheritance found',
     'Node prerequisite commit SHA',
-    'Node prerequisite pushed',
+    'Requested actions',
+    'Commit SHA(s)',
+    'Branch and push destination',
+    'Merge/pull request URL',
+    'Delivery status',
     'Node prerequisite checks',
     'Baseline',
     'Files modified',
@@ -198,8 +207,8 @@ const incompatibleNode = fixtures.find(fixture => fixture.id === 'incompatible-n
 assert.equal(incompatibleNode.expect.status, 'node-remediation-decision-required')
 for (const invariant of [
     'no Node changes before explicit approval',
-    'one isolated Node prerequisite commit',
-    'no push',
+    'isolated Node prerequisite commit only when authorized',
+    'no push unless explicitly requested after successful migration verification',
 ]) {
     assert(incompatibleNode.expect.preserve.includes(invariant), `incompatible-node is missing invariant: ${invariant}`)
 }

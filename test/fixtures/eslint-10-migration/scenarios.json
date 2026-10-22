@@ -123,8 +123,8 @@
             "preserve": [
                 "no Node changes before explicit approval",
                 "coherent engines and .nvmrc update",
-                "one isolated Node prerequisite commit",
-                "no push"
+                "isolated Node prerequisite commit only when authorized",
+                "no push unless explicitly requested after successful migration verification"
             ],
             "lockfile": "package-lock.json"
         }

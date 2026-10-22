@@ -15,8 +15,11 @@ Complete the phases in order. A **STOP** means: make no further changes, explain
 - Preserve the existing package manager and lockfile format. Never create a second lockfile.
 - Use the package manager to change dependencies and update its lockfile; do not hand-edit a lockfile.
 - Do not update React, React Native, Next, Expo, or other application frameworks. Update Node declarations only through the explicitly approved prerequisite flow in Phase 1; never change them during the migration itself.
-- Do not stash, reset, checkout, push, or silently roll back changes. Do not commit except for the one isolated Node prerequisite commit explicitly authorized in Phase 1; the ESLint migration remains uncommitted.
-- Do not bypass commit hooks, amend an existing commit, force any Git operation, or push under any circumstance.
+- Do not stash, reset, destructively check out paths, or silently roll back changes.
+- By default, leave all verified migration changes uncommitted. Do not create or switch branches, push, or open a merge request or pull request unless the user explicitly requests those actions.
+- Follow explicit Git and delivery instructions from the user's initial request or a later message. Do not ask for confirmation again when an instruction already authorizes an action. A request to open a merge request or pull request authorizes the branch creation, commit or commits, push, and request creation needed to deliver it.
+- Treat standalone Git instructions narrowly: a commit request does not authorize a push, and a push request does not authorize unrelated changes. A direct commit or push to the default or protected branch is allowed only when the user explicitly requests that exact action and destination.
+- Do not bypass commit hooks, amend an existing commit, force any Git operation (including force-push, even if requested), or merge a request unless explicitly requested. If a requested Git or delivery action fails, preserve the visible state and report the failure instead of weakening safeguards.
 - Do not disable rules, lower severities, or add `eslint-disable`, `@ts-ignore`, or equivalent suppressions merely to obtain a passing lint.
 - Do not copy `eslint-config-facile`'s internal compatibility shims or plugin normalization into the consumer. Add only the package-manager compatibility metadata documented in `references/migration-matrix.md`.
 - Do not perform unrelated refactors or cosmetic modernization.
@@ -53,14 +56,16 @@ Perform every check before modifying any file.
 11. If a JavaScript config is dynamic and its effective branches cannot be reconstructed statically for the current repository, **STOP** and identify the dynamic expressions.
 12. Compare all workspaces. If they cannot move together without incompatible ESLint or `eslint-config-facile` combinations, **STOP**.
 13. If Node prerequisite remediation is required, handle it only after every other read-only preflight check has passed:
-    - List every affected file and current value, explain why it blocks the migration, and present an exact prerequisite-only plan containing each proposed value, any package-manager-generated lockfile update, the validation commands, and the proposed commit message.
-    - Ask whether the user explicitly approves that exact plan and authorizes one isolated Node prerequisite commit without push. Approval applies only to the listed files and values. If the user declines or does not choose, **STOP** without changes.
+    - List every affected file and current value, explain why it blocks the migration, and present an exact prerequisite-only plan containing each proposed value, any package-manager-generated lockfile update, and the validation commands. Include a proposed commit message only when the user's instructions authorize a commit (an MR/PR request counts).
+    - Ask whether the user explicitly approves that exact Node remediation plan. This approval governs only the Node file changes and does not authorize Git actions by itself. Do not ask again about Git actions already authorized by the user's initial request or a later instruction. If the user declines or does not choose, **STOP** without changes.
     - Do not infer a Node release line. Preserve an already established supported line when the repository makes it unambiguous; otherwise ask the user to choose among the supported lines from `references/target.md`. Do not broaden `engines.node` beyond repository policy merely to copy the complete target range.
     - After approval, update all affected Node declarations coherently and nothing else. This may include `engines`, Volta, `.nvmrc`, tool-version files, direct CI runtime declarations, and container base images only when their mapping is unambiguous. If a declaration is generated, shared externally, digest-pinned without a verified replacement, or otherwise ambiguous, **STOP** before editing and ask the user to handle the prerequisite. Never perform a partial Node upgrade.
     - Use the existing package manager only if needed to keep its lockfile consistent with an approved manifest change. Do not update ESLint or any unrelated dependency in this prerequisite step.
     - Re-read every Node declaration, run `node --version`, the package-manager version command, the repository's existing runtime/engine check when present, and `git diff --check`. Do not install or replace a system-wide Node toolchain. If the active runtime remains incompatible, ask the user to activate the approved version and **STOP** until it is verifiably active.
-    - Before committing, show the resulting diff and confirm that `git status --short` contains only the approved Node prerequisite files and any required generated lockfile. Stage only those paths and create one commit using the approved message and the repository's commit convention. Do not amend, bypass hooks, or push. If a hook changes files or the commit fails, **STOP**, preserve the visible state, and report the failure instead of retrying with bypass flags.
-    - Record the prerequisite commit SHA, verify that `git status --short` is empty, and then continue to Phase 2. All later migration changes remain uncommitted. If the worktree is not clean after the commit, **STOP**.
+    - Confirm the resulting diff and that `git status --short` contains only the approved Node prerequisite files and any required generated lockfile.
+    - If the user's instructions authorize a commit (an MR/PR request counts), ensure the commit lands on the user-requested destination: for an MR/PR request, create or switch to the requested branch or a dedicated conventional branch before committing when currently on the default or a protected branch. Stage only those paths and create one isolated Node prerequisite commit using the proposed message and the repository's commit convention, without asking for another confirmation. Do not amend or bypass hooks, and do not push yet unless the user explicitly requested that sequencing. If a hook changes files or the commit fails, **STOP**, preserve the visible state, and report the failure instead of retrying with bypass flags.
+    - If no commit was authorized, leave the approved Node changes uncommitted and continue; this approved dirty state is expected.
+    - Record the prerequisite commit SHA or `not committed`, then continue to Phase 2. After an authorized commit, `git status --short` must be empty; without one, it must contain only the approved Node prerequisite paths. All later migration changes remain uncommitted unless the user explicitly requested otherwise. Any other worktree state is a **STOP**.
 
 ## Phase 2: baseline
 
@@ -150,16 +155,28 @@ Create valid flat configuration using only public `eslint-config-facile` entry p
 3. Once the flat config loads and the full lint passes, list obsolete `.eslintrc*` and `.eslintignore` files and ask for explicit confirmation before deleting them. Do not delete them beforehand.
 4. If confirmed, remove only the listed obsolete files and rerun the complete lint command. If not confirmed, leave them and report them as remaining cleanup.
 5. Run `git diff --check` and inspect `git status --short` and the final diff.
-6. Confirm there is still exactly one package-manager family/lockfile, that application framework declarations did not change, and that Node declarations match the approved prerequisite commit with no later migration-phase edits.
+6. Confirm there is still exactly one package-manager family/lockfile, that application framework declarations did not change, and that Node declarations match the approved prerequisite changes (and their isolated commit, when one was authorized) with no later migration-phase edits.
 7. Check idempotence without making speculative updates: manifests already target the recorded versions, flat config has no legacy conversion left, and rerunning the package-manager install plus verification produces no tracked diff. Report any drift instead of hiding it.
 
-## Phase 9: report
+## Phase 9: requested Git and delivery actions
+
+Run this phase only after the migration itself satisfies all **Completed** verification requirements. Do not commit, push, or open a request for a blocked or incomplete migration.
+
+1. Determine authorization from the user's initial request and later explicit instructions. Invoking this skill alone does not authorize any Git or delivery action.
+2. If no Git or delivery action was requested, leave every migration change uncommitted, do not create or switch branches, do not push, and do not open a request. Record delivery as not requested and continue to the report.
+3. If the user requested a merge request or pull request, perform the necessary branch creation, commits, push, and request creation without asking for confirmation again. Use a requested source/target branch, draft state, title, assignee, or other supplied detail; otherwise use the repository convention and remote default target. Do not merge unless explicitly requested.
+4. For standalone commit, branch, or push instructions, perform only the requested actions and their strictly necessary prerequisites. A request to commit on the default branch authorizes that commit but not a push; pushing to the default/protected branch requires an explicit request naming that action and destination.
+5. Before any authorized commit, inspect the final diff and status and stage only migration files. Use the repository's commit convention. Do not amend or bypass hooks. If hooks modify files or the commit fails, preserve the visible state and report the failure.
+6. Before any authorized push or request creation, verify the destination and preserve all requested metadata. Never force-push or bypass branch protection.
+7. Record actions performed, commit SHA or SHAs, branch and push destination, and merge/pull request URL when applicable. If a requested action fails, do not weaken safeguards; report **Incomplete** with the exact failed step and preserved repository state.
+
+## Phase 10: report
 
 Report using `references/report-template.md`. Include every command and exit code, even failures. State one of:
 
-- **Completed**: canonical lint is green, required verification passed, and no unresolved blocker remains;
+- **Completed**: canonical lint is green, required verification passed, and no unresolved blocker remains. Completed may legitimately leave a verified uncommitted diff when no Git or delivery action was requested;
 - **Blocked after changes**: preserve the visible diff and explain the decision needed;
 - **Stopped without changes**: name the preflight blocker;
-- **Incomplete**: lint remains red or required verification could not run.
+- **Incomplete**: lint remains red, required verification could not run, or an explicitly requested Git/delivery action failed.
 
 Never claim completion based only on config loading or a partial lint scope.

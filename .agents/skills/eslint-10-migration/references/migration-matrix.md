@@ -144,7 +144,7 @@ Preserve the lint command's target set. Remove or replace an option only when ES
 Stop and request a decision for:
 
 - dirty worktree, non-Git directory, Bun, or competing package-manager evidence;
-- incompatible Node when prerequisite remediation is declined, not explicitly approved, ambiguous, only partially applicable, or cannot be validated and committed cleanly;
+- incompatible Node when prerequisite remediation is declined, not explicitly approved, ambiguous, only partially applicable, or cannot be validated; when Git actions were requested, it must also be committed/delivered according to those instructions;
 - dynamic config whose effective behavior is not statically reconstructible;
 - incompatible workspaces, frameworks, presets, parsers, processors, or plugins;
 - an unverified plugin/rule mapping;

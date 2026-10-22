@@ -11,8 +11,7 @@ Use exactly one: **Completed**, **Blocked after changes**, **Stopped without cha
 - Existing lockfile:
 - Running Node and declared constraints before/after:
 - Node prerequisite remediation: not needed / declined / completed / blocked
-- Node prerequisite commit SHA: not applicable or SHA
-- Node prerequisite pushed: **No**
+- Node prerequisite commit SHA: not applicable / not committed / SHA
 - Workspaces analyzed:
 - Configurations and inheritance found:
 - Framework versions detected:
@@ -27,7 +26,7 @@ Use exactly one: **Completed**, **Blocked after changes**, **Stopped without cha
 | Prettier               |        |              |             |
 | TypeScript             |        |              |             |
 
-List relevant plugin changes separately. Confirm explicitly that React, React Native, Next, and Expo were not upgraded. If Node changed, list only the explicitly approved prerequisite files and values, the isolated commit SHA, and confirmation that it was not pushed; otherwise confirm that Node did not change.
+List relevant plugin changes separately. Confirm explicitly that React, React Native, Next, and Expo were not upgraded. If Node changed, list only the explicitly approved prerequisite files and values, whether the approved Node changes stayed uncommitted or were included in authorized commit(s)/push (with the isolated commit SHA when one exists); otherwise confirm that Node did not change.
 
 ## Baseline
 
@@ -39,7 +38,7 @@ Never call an issue pre-existing unless this baseline observed it.
 
 ## Changes
 
-- Node prerequisite files and isolated commit, if approved:
+- Node prerequisite files and isolated commit or uncommitted state, if approved:
 - Config conversion strategy and preserved scopes:
 - Files modified:
 - Files removed after confirmation:
@@ -62,6 +61,14 @@ Never call an issue pre-existing unless this baseline observed it.
 | Idempotence/install check          |           |        |
 
 Distinguish failures from non-ESLint steps embedded in a lint script.
+
+## Git and delivery
+
+- Requested actions: none / commit / branch / push / merge request / pull request / other
+- Commit SHA(s): not created or SHA(s)
+- Branch and push destination: not applicable or details
+- Merge/pull request URL: not requested or URL
+- Delivery status: not requested / completed / failed at <step>
 
 ## Remaining findings and decisions
 
